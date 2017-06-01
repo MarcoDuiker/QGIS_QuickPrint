@@ -1,0 +1,39 @@
+# This file contains metadata for your plugin. Beginning
+# with version 1.8 this is the preferred way to supply information about a
+# plugin. The current method of embedding metadata in __init__.py will
+# be supported until version 2.0
+
+# This file should be included when you package your plugin.
+
+# Mandatory items:
+
+
+[general]
+name=QuickPrint
+qgisMinimumVersion=2.0
+description=Create a quick print with a minimum of fuzz.
+version=0.2
+author=Marco Duiker (MD-kwadraat)
+email=info@md-kwadraat.nl
+about=Create a quick print on a fixed template. The print will include a title, subtitle, scalebar, date, attribution and remarks. How to add your logo is explained in the help. The user can choose between A3 and A4 and between portrait and landscape.
+
+# end of mandatory metadata
+
+# Optional items:
+
+# Uncomment the following line and add your changelog entries:
+# changelog=
+
+# tags are comma separated with spaces allowed
+tags=print
+
+homepage=
+tracker=https://github.com/MarcoDuiker/QGIS_QuickPrint/issues
+repository=https://github.com/MarcoDuiker/QGIS_QuickPrint
+icon=icon.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
