@@ -33,6 +33,7 @@ import os.path
 import time
 import sys
 import subprocess
+import webbrowser
 
 
 class QuickPrint:
@@ -116,8 +117,9 @@ class QuickPrint:
             self.dlg.cancel_save_button_box.button(QDialogButtonBox.Save).setEnabled(True)
 
     def help(self):
-        #  utils.showPluginHelp()      # this is not working properly
-        QDesktopServices().openUrl(QUrl(os.path.join("file://",self.plugin_dir, 'help/build/html','index.html'),QUrl.TolerantMode))
+        # utils.showPluginHelp()                                                                                                        # this is not working properly
+        # QDesktopServices().openUrl(QUrl(os.path.join("file://",self.plugin_dir, 'help/build/html','index.html'),QUrl.TolerantMode))   # this is not working properly in Windows 10
+        webbrowser.open_new(os.path.join("file://",os.path.abspath(self.plugin_dir), 'help/build/html','index.html')) 
 
     def run(self):
         self.dlg.show()
