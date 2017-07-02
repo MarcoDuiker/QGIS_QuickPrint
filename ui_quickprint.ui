@@ -199,5 +199,38 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cancel_save_button_box</sender>
+   <signal>accepted()</signal>
+   <receiver>QuickPrint</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="source_label" >
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destination_label" >
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancel_save_button_box</sender>
+   <signal>rejected()</signal>
+   <receiver>QuickPrint</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="source_label" >
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destination_label" >
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

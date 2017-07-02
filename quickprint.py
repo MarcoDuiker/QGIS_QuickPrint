@@ -59,8 +59,9 @@ class QuickPrint:
         
         # add some necessary signal and slot communication as well as disable the save button for now  
         self.dlg.cancel_save_button_box.button(QDialogButtonBox.Save).setEnabled(False)
-        QObject.connect(self.dlg.fileBrowseButton, SIGNAL("clicked()"), self.chooseFile)
-        QObject.connect(self.dlg.pdfFileNameBox, SIGNAL("textChanged(QString)"), self.pdfFileNameBoxChanged)
+
+        self.dlg.fileBrowseButton.clicked.connect(self.chooseFile)
+        self.dlg.pdfFileNameBox.textChanged.connect(self.pdfFileNameBoxChanged)
 
     def initGui(self):
         # Create action that will start plugin configuration
@@ -124,7 +125,7 @@ class QuickPrint:
     def run(self):
         self.dlg.show()
         result = self.dlg.exec_()
-        
+
         if result:
             dpi = 600
 
