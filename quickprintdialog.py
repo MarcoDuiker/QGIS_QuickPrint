@@ -20,14 +20,17 @@
  ***************************************************************************/
 """
 
-from PyQt4 import QtCore, QtGui
-from ui_quickprint import Ui_QuickPrint
-# create the dialog for zoom to point
+import os
 
+from PyQt4 import QtGui, uic
 
-class QuickPrintDialog(QtGui.QDialog, Ui_QuickPrint):
-    def __init__(self):
-        QtGui.QDialog.__init__(self)
+# create the di# this magic let compile Qt the ui files on the fly (if path known)
+FORM_CLASS, _ = uic.loadUiType(os.path.join(
+    os.path.dirname(__file__), 'ui_quickprint.ui'))
+
+class QuickPrintDialog(QtGui.QDialog, FORM_CLASS):
+    def __init__(self, parent=None):
+        super(QuickPrintDialog, self).__init__(parent)
         # Set up the user interface from Designer.
         # After setupUI you can access any designer object by doing
         # self.<objectname>, and you can use autoconnect slots - see
