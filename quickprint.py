@@ -63,10 +63,6 @@ class QuickPrint:
         self.dlg.fileBrowseButton.clicked.connect(self.chooseFile)
         self.dlg.pdfFileNameBox.textChanged.connect(self.pdfFileNameBoxChanged)
 
-        # some captions into the inputs
-        self.dlg.titelFld.setPlaceholderText("Title (optional)")
-        self.dlg.subTitelFld.setPlaceholderText("Subtitle (optional)")
-
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction(
