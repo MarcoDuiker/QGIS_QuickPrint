@@ -12,17 +12,17 @@
 name=QuickPrint
 qgisMinimumVersion=2.0
 description=Create a quick print with a minimum of fuzz.
-version=0.3
+version=0.4
 author=Marco Duiker (MD-kwadraat)
 email=info@md-kwadraat.nl
-about=Create a quick print on a fixed template. The print will include a title, subtitle, scalebar, date, attribution and remarks. How to add your logo is explained in the help. The user can choose between A3 and A4 and between portrait and landscape.
+about=Create a quick print on a fixed template build into the plugin. The print will include a title, subtitle, scalebar, date, attribution and remarks. The user can choose between A3 and A4 and between portrait and landscape. The plugin can be adapted so that a logo is included on the print. This explained in the help. 
 
 # end of mandatory metadata
 
 # Optional items:
 
 # Uncomment the following line and add your changelog entries:
-changelog=fixed open help issue on windows 10; added homepage
+changelog=autocompile and resize dialog; beter about in metadata
 
 # tags are comma separated with spaces allowed
 tags=print
