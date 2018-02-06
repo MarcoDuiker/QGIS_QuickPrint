@@ -1,8 +1,8 @@
 <RCC>
-    <qresource prefix="/plugins/quickprint" >
+    <qresource prefix="/plugins/QuickPrint3" >
         <file>icon.png</file>
     </qresource>
-    <qresource prefix="/plugins/quickprint" >
+    <qresource prefix="/plugins/QuickPrint3" >
         <file>help.png</file>
     </qresource>
 </RCC>

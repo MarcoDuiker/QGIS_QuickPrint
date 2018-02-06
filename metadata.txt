@@ -1,35 +1,40 @@
-# This file contains metadata for your plugin. Beginning
-# with version 1.8 this is the preferred way to supply information about a
-# plugin. The current method of embedding metadata in __init__.py will
-# be supported until version 2.0
+# This file contains metadata for your plugin. Since 
+# version 2.0 of QGIS this is the proper way to supply 
+# information about a plugin. The old method of 
+# embedding metadata in __init__.py will 
+# is no longer supported since version 2.0.
 
-# This file should be included when you package your plugin.
-
-# Mandatory items:
-
+# This file should be included when you package your plugin.# Mandatory items:
 
 [general]
 name=QuickPrint
-qgisMinimumVersion=2.0
-description=Create a quick print with a minimum of fuzz.
-version=0.4
-author=Marco Duiker (MD-kwadraat)
+qgisMinimumVersion=2.99
+qgisMaximumVersion=3.99
+description=The QuickPrint Plugin for QGIS3
+version=3.4
+author=Marco Duiker MD-kwadraat
 email=info@md-kwadraat.nl
-about=Create a quick print on a fixed template build into the plugin. The print will include a title, subtitle, scalebar, date, attribution and remarks. The user can choose between A3 and A4 and between portrait and landscape. The plugin can be adapted so that a logo is included on the print. This explained in the help. 
 
-# end of mandatory metadata
+about=The QuickPrint plug-in provides a simple way to quickly create a pdf from the map as shown in the map pane. 
 
-# Optional items:
+    The map is not just a screenshot, but a real map with a title, subtitle, scalebar, date, attribution and remarks. In this way you get a decent print without the hassle of setting up and using print templates. 
 
-# Uncomment the following line and add your changelog entries:
-changelog=autocompile and resize dialog; beter about in metadata
+    You can choose between A3 and A4 paper sizes and between portrait and landscape paper orientation.
 
-# tags are comma separated with spaces allowed
-tags=print
-
-homepage=https://github.com/MarcoDuiker/QGIS_QuickPrint
 tracker=https://github.com/MarcoDuiker/QGIS_QuickPrint/issues
-repository=https://github.com/MarcoDuiker/QGIS_QuickPrint
+repository=https://github.com/MarcoDuiker/QGIS_QuickPrint/
+# End of mandatory metadata
+
+# Recommended items:
+
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=print template
+
+homepage=https://github.com/MarcoDuiker/QGIS_QuickPrint/
+category=Plugins
 icon=icon.png
 # experimental flag
 experimental=False

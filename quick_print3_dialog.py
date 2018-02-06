@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- nmQuickPrintDialog
+ QuickPrint3Dialog
                                  A QGIS plugin
- Een snel printje maken
+ The QuickPrint Plugin for QGIS3
                              -------------------
-        begin                : 2014-05-28
-        copyright            : (C) 2017 by Marco Duiker (MD-kwadraat)
-        email                : md@md-kwadraat.nl
+        begin                : 2018-01-15
+        git sha              : $Format:%H$
+        copyright            : (C) 2018 by Marco Duiker MD-kwadraat
+        email                : info@md-kwadraat.nl
  ***************************************************************************/
 
 /***************************************************************************
@@ -22,15 +23,17 @@
 
 import os
 
-from PyQt4 import QtGui, uic
+from PyQt5 import uic
+from PyQt5 import QtWidgets
 
-# create the di# this magic let compile Qt the ui files on the fly (if path known)
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'ui_quickprint.ui'))
+    os.path.dirname(__file__), 'quick_print3_dialog_base.ui'))
 
-class QuickPrintDialog(QtGui.QDialog, FORM_CLASS):
+
+class QuickPrint3Dialog(QtWidgets.QDialog, FORM_CLASS):
     def __init__(self, parent=None):
-        super(QuickPrintDialog, self).__init__(parent)
+        """Constructor."""
+        super(QuickPrint3Dialog, self).__init__(parent)
         # Set up the user interface from Designer.
         # After setupUI you can access any designer object by doing
         # self.<objectname>, and you can use autoconnect slots - see

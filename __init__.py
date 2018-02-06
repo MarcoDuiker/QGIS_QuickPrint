@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- QuickPrint
+ QuickPrint3
                                  A QGIS plugin
- Create a quick print with a minimum of fuzz
+ The QuickPrint Plugin for QGIS3
                              -------------------
-        begin                : 2014-05-28
-        copyright            : (C) 2017 by Marco Duiker (MD-kwadraat)
+        begin                : 2018-01-15
+        copyright            : (C) 2018 by Marco Duiker MD-kwadraat
         email                : info@md-kwadraat.nl
+        git sha              : $Format:%H$
  ***************************************************************************/
 
 /***************************************************************************
@@ -21,7 +22,14 @@
  This script initializes the plugin, making it known to QGIS.
 """
 
-def classFactory(iface):
-    # load QuickPrint class from file QuickPrint
-    from quickprint import QuickPrint
-    return QuickPrint(iface)
+
+# noinspection PyPep8Naming
+def classFactory(iface):  # pylint: disable=invalid-name
+    """Load QuickPrint3 class from file QuickPrint3.
+
+    :param iface: A QGIS interface instance.
+    :type iface: QgsInterface
+    """
+    #
+    from .quick_print3 import QuickPrint3
+    return QuickPrint3(iface)
