@@ -343,7 +343,7 @@ class QuickPrint3:
                     l.addItem(logo)
                 except:
                     # failed to add the logo, show message and continue
-                    self.iface.messageBar().pushMessage("Warning", "Failed adding logo %s" % os.path.basename(logoImagePath) ,self.iface.messageBar().WARNING)
+                    self.iface.messageBar().pushMessage("Warning", "Failed adding logo %s" % os.path.basename(logoImagePath) ,Qgis.Warning)
 
             #add date
             dateLabel = QgsLayoutItemLabel(l)
@@ -390,7 +390,7 @@ class QuickPrint3:
             exporter.exportToPdf(self.dlg.pdfFileNameBox.displayText(), pdf_settings)
 
             # inform the user about the result
-            self.iface.messageBar().pushMessage("Info", "Saved as pdf: %s" % self.dlg.pdfFileNameBox.displayText() ,self.iface.messageBar().INFO)
+            self.iface.messageBar().pushMessage("Info", "Saved as pdf: %s" % self.dlg.pdfFileNameBox.displayText(), Qgis.Info)
             # and if user wants so open the file
             if self.dlg.openAfterSaveBox.isChecked():
                 if sys.platform.startswith('linux'):
@@ -400,3 +400,5 @@ class QuickPrint3:
                     os.startfile(self.dlg.pdfFileNameBox.displayText())
 
             QGuiApplication.restoreOverrideCursor()
+
+
