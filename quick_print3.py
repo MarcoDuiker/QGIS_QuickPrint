@@ -82,9 +82,6 @@ class QuickPrint3:
         self.actions = []
         self.menu = self.tr(u'&QuickPrint3')
         
-        self.toolbar = self.iface.addToolBar(u'QuickPrint3')
-        self.toolbar.setObjectName(u'QuickPrint3')
-
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
         """Get the translation for a string using Qt translation API.
@@ -183,6 +180,8 @@ class QuickPrint3:
             u"QuickPrint", self.iface.mainWindow())
         # connect the action to the run method
         self.action.triggered.connect(self.run)
+        self.actions.append(self.action)
+        
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action)
         self.iface.addPluginToMenu(u"&QuickPrint", self.action)
@@ -193,17 +192,16 @@ class QuickPrint3:
         self.helpAction.triggered.connect(self.help)
         self.helpAction.setWhatsThis("Help")
         self.iface.addPluginToMenu(u"&QuickPrint", self.helpAction)
+        self.actions.append(self.helpAction)
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         
         for action in self.actions:
             self.iface.removePluginMenu(
-                self.tr(u'&QuickPrint3'),
+                self.tr(u'&QuickPrint'),
                 action)
             self.iface.removeToolBarIcon(action)
-        # remove the toolbar
-        del self.toolbar
 
     def getPaperSize(self):
         '''
@@ -400,5 +398,3 @@ class QuickPrint3:
                     os.startfile(self.dlg.pdfFileNameBox.displayText())
 
             QGuiApplication.restoreOverrideCursor()
-
-
