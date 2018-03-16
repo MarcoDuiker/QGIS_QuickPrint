@@ -247,7 +247,7 @@ class QuickPrint3:
         acts on help button on dialog
         '''
 
-        QDesktopServices().openUrl(QUrl(os.path.join("file://",self.plugin_dir, 'help/build/html','index.html'),QUrl.TolerantMode))  
+        QDesktopServices().openUrl(QUrl.fromLocalFile(os.path.join("file://",self.plugin_dir, 'help/build/html','index.html')))
         #webbrowser.open_new(os.path.join("file://",os.path.abspath(self.plugin_dir), 'help/build/html','index.html')) 
 
 
