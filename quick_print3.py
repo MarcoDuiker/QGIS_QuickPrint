@@ -32,6 +32,7 @@ from qgis.utils import *
 from .resources import *
 # Import the code for the dialog
 from .quick_print3_dialog import QuickPrint3Dialog
+
 import os.path
 import time
 import sys
@@ -82,6 +83,9 @@ class QuickPrint3:
         self.actions = []
         self.menu = self.tr(u'&QuickPrint3')
         
+        self.toolbar = self.iface.addToolBar(u'QuickPrint3')
+        self.toolbar.setObjectName(u'QuickPrint3')
+
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
         """Get the translation for a string using Qt translation API.
@@ -163,8 +167,8 @@ class QuickPrint3:
         if add_to_toolbar:
             self.toolbar.addAction(action)
 
-        if add_to_menu:
-            self.iface.addPluginToMenu(
+        if add_to_menu:                     # if we use addPluginToMenu, 
+            self.iface.addPluginToWebMenu(  # the toolbar is added to the plugins toolbar
                 self.menu,
                 action)
 
@@ -175,33 +179,31 @@ class QuickPrint3:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        self.action = QAction(
-            QIcon(":/plugins/QuickPrint3/icon.png"),
-            u"QuickPrint", self.iface.mainWindow())
+        self.action = QAction(QIcon(":/plugins/QuickPrint3/icon.png"),
+                                    u"QuickPrint", self.iface.mainWindow())
         # connect the action to the run method
         self.action.triggered.connect(self.run)
-        self.actions.append(self.action)
-        
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action)
         self.iface.addPluginToMenu(u"&QuickPrint", self.action)
 
         # help
         self.helpAction = QAction(QIcon(":/plugins/QuickPrint3/help.png"), 
-                             "Help", self.iface.mainWindow())
+                             self.tr(u"Help"), self.iface.mainWindow())
         self.helpAction.triggered.connect(self.help)
-        self.helpAction.setWhatsThis("Help")
+        self.helpAction.setWhatsThis(self.tr(u"Help"))
         self.iface.addPluginToMenu(u"&QuickPrint", self.helpAction)
-        self.actions.append(self.helpAction)
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         
         for action in self.actions:
             self.iface.removePluginMenu(
-                self.tr(u'&QuickPrint'),
+                self.tr(u'&QuickPrint3'),
                 action)
             self.iface.removeToolBarIcon(action)
+        # remove the toolbar
+        del self.toolbar
 
     def getPaperSize(self):
         '''
@@ -231,7 +233,7 @@ class QuickPrint3:
         shows file chooser
         '''
 
-        fileName, __ = QFileDialog.getSaveFileName(caption = "save pdf", directory = '', filter = '*.pdf')
+        fileName, __ = QFileDialog.getSaveFileName(caption = self.tr(u"save pdf"), directory = '', filter = '*.pdf')
         self.dlg.pdfFileNameBox.setText(fileName)
         
     def pdfFileNameBoxChanged(self, fileName):
@@ -247,7 +249,8 @@ class QuickPrint3:
         acts on help button on dialog
         '''
 
-        QDesktopServices().openUrl(QUrl.fromLocalFile(os.path.join("file://",self.plugin_dir, 'help/build/html','index.html')))
+        QDesktopServices().openUrl(QUrl.fromLocalFile(os.path.join("file://",
+            self.plugin_dir, 'help/build/html','index.html')))
         #webbrowser.open_new(os.path.join("file://",os.path.abspath(self.plugin_dir), 'help/build/html','index.html')) 
 
 
@@ -341,7 +344,9 @@ class QuickPrint3:
                     l.addItem(logo)
                 except:
                     # failed to add the logo, show message and continue
-                    self.iface.messageBar().pushMessage("Warning", "Failed adding logo %s" % os.path.basename(logoImagePath) ,Qgis.Warning)
+                    self.iface.messageBar().pushMessage("Warning", self.tr(u"Failed adding logo ") + \
+                                                        os.path.basename(logoImagePath), 
+                                                        Qgis.Warning)
 
             #add date
             dateLabel = QgsLayoutItemLabel(l)
@@ -388,7 +393,9 @@ class QuickPrint3:
             exporter.exportToPdf(self.dlg.pdfFileNameBox.displayText(), pdf_settings)
 
             # inform the user about the result
-            self.iface.messageBar().pushMessage("Info", "Saved as pdf: %s" % self.dlg.pdfFileNameBox.displayText(), Qgis.Info)
+            self.iface.messageBar().pushMessage("Info", self.tr(u"Saved as pdf: ") + \
+                                                self.dlg.pdfFileNameBox.displayText(),
+                                                Qgis.Info)
             # and if user wants so open the file
             if self.dlg.openAfterSaveBox.isChecked():
                 if sys.platform.startswith('linux'):
