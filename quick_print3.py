@@ -81,10 +81,10 @@ class QuickPrint3:
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&QuickPrint3')
+        self.menu = self.tr(u'&QuickPrint')
         
-        self.toolbar = self.iface.addToolBar(u'QuickPrint3')
-        self.toolbar.setObjectName(u'QuickPrint3')
+        self.toolbar = self.iface.addToolBar(u'QuickPrint')
+        self.toolbar.setObjectName(u'QuickPrint')
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
@@ -100,7 +100,7 @@ class QuickPrint3:
         """
 
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('QuickPrint3', message)
+        return QCoreApplication.translate('QuickPrint', message)
 
 
     def add_action(
@@ -179,27 +179,27 @@ class QuickPrint3:
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        self.action = QAction(QIcon(":/plugins/QuickPrint3/icon.png"),
-                                    u"QuickPrint", self.iface.mainWindow())
-        # connect the action to the run method
-        self.action.triggered.connect(self.run)
-        # Add toolbar button and menu item
-        self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu(u"&QuickPrint", self.action)
-
-        # help
-        self.helpAction = QAction(QIcon(":/plugins/QuickPrint3/help.png"), 
-                             self.tr(u"Help"), self.iface.mainWindow())
-        self.helpAction.triggered.connect(self.help)
-        self.helpAction.setWhatsThis(self.tr(u"Help"))
-        self.iface.addPluginToMenu(u"&QuickPrint", self.helpAction)
+        icon_path = ':/plugins/QuickPrint3/icon.png'
+        self.add_action(
+            icon_path,
+            text=self.tr(u'QuickPrint'),
+            callback=self.run,
+            parent=self.iface.mainWindow())
+            
+        icon_path = ':/plugins/QuickPrint3/help.png'
+        self.add_action(
+            icon_path,
+            text=self.tr(u'Help'),
+            callback=self.help,
+            parent=self.iface.mainWindow(),
+            add_to_toolbar=False)
 
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
         
         for action in self.actions:
             self.iface.removePluginMenu(
-                self.tr(u'&QuickPrint3'),
+                self.tr(u'&QuickPrint'),
                 action)
             self.iface.removeToolBarIcon(action)
         # remove the toolbar

@@ -92,11 +92,11 @@
     <name>QuickPrint3</name>
     <message>
         <location filename="../quick_print3.py" line="201"/>
-        <source>&amp;QuickPrint3</source>
+        <source>&amp;QuickPrint</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="194"/>
+        <location filename="../quick_print3.py" line="190"/>
         <source>Help</source>
         <translation></translation>
     </message>
@@ -114,6 +114,11 @@
         <location filename="../quick_print3.py" line="396"/>
         <source>Saved as pdf: </source>
         <translation>Opgeslagen als pdf: </translation>
+    </message>
+    <message>
+        <location filename="../quick_print3.py" line="183"/>
+        <source>QuickPrint</source>
+        <translation></translation>
     </message>
 </context>
 </TS>
