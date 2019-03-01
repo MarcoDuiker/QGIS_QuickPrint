@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Introduction &#8212; quickprint 3.2 documentation</title>
+    <title>Introduction &#8212; quickprint 3.4.5 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '3.2',
+        VERSION:     '3.4.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -35,7 +35,7 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the QuickPrint plugin documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">quickprint 3.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">quickprint 3.4.5 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -49,15 +49,49 @@
 <div class="section" id="about">
 <h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
 <p>This plug-in is developed by Marco Duiker from <a class="reference external" href="http://www.md-kwadraat.nl/">MD-kwadraat</a> .</p>
+<p>You will find the plugin in the web menu of QGIS. Furthermore you’ll find a print icon on a toolbar.</p>
 <p>The plug-in provides a simple way to quickly create a pdf from the map as shown in the map pane. The map is not just a screenshot, but a real map with a title, subtitle, scalebar, date, attribution and remarks.</p>
 <p>In this way you get a decent print without the hassle of setting up and using print templates.</p>
 <p>As simple things go it is pretty much self-explanatory.</p>
-<p>You can choose between A3 and A4 paper sizes and between portrait and landscape paper orientation.</p>
-<p>The only really useful information you can gather from this help is the way you can get a logo on the page.</p>
+<p>For printing you can choose between A3 and A4 paper sizes and between portrait and landscape paper orientation.</p>
 </div>
-<div class="section" id="putting-your-logo-on-the-page">
-<h2>Putting your logo on the page<a class="headerlink" href="#putting-your-logo-on-the-page" title="Permalink to this headline">¶</a></h2>
-<p>If you want your logo to appear on the page, put a logo.png in the plugins img folder. It will appear in the top righthand corner of all prints you make.</p>
+<div class="section" id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<p>The new settings dialog allows you to:</p>
+<blockquote>
+<div><ul class="simple">
+<li>change the date formatting</li>
+<li>change the font and font size for the texts around the map</li>
+<li>select an image to use as a logo</li>
+</ul>
+</div></blockquote>
+<p>If you don’t use this settings dialog, QuickPrint will work just as you are used to.</p>
+<div class="section" id="date-formatting">
+<h3>Date formatting<a class="headerlink" href="#date-formatting" title="Permalink to this headline">¶</a></h3>
+<p>For date formatting you can provide a Python format string, in which the following items will be substituted:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">{day}</span></code> by the number of the day</li>
+<li><code class="docutils literal"><span class="pre">{month}</span></code> by the number of the day</li>
+<li><code class="docutils literal"><span class="pre">{year}</span></code> by the number of the year</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="font-and-font-size">
+<h3>Font and font size<a class="headerlink" href="#font-and-font-size" title="Permalink to this headline">¶</a></h3>
+<p>You can select a font from the font combobox to use for the titles and texts around the map.</p>
+<p>As some fonts tend to work out a little larger or smaller than the default font, you can use the slider to set the font size a little larger or smaller to compensate for this.</p>
+</div>
+<div class="section" id="logo">
+<h3>Logo<a class="headerlink" href="#logo" title="Permalink to this headline">¶</a></h3>
+<p>You can put a logo in the top righthand corner of all prints you make, by providing one of the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>A URL to an image file. This URL should start with <code class="docutils literal"><span class="pre">http://</span></code> or <code class="docutils literal"><span class="pre">https://</span></code>.</li>
+<li>A path to a local file on your file system. It’s best to use the <code class="docutils literal"><span class="pre">Browse</span></code> button for this.</li>
+</ul>
+</div></blockquote>
+</div>
 </div>
 <div class="section" id="north-arrow">
 <h2>North Arrow<a class="headerlink" href="#north-arrow" title="Permalink to this headline">¶</a></h2>
@@ -76,7 +110,12 @@
   <ul>
 <li><a class="reference internal" href="#">Introduction</a><ul>
 <li><a class="reference internal" href="#about">About</a></li>
-<li><a class="reference internal" href="#putting-your-logo-on-the-page">Putting your logo on the page</a></li>
+<li><a class="reference internal" href="#settings">Settings</a><ul>
+<li><a class="reference internal" href="#date-formatting">Date formatting</a></li>
+<li><a class="reference internal" href="#font-and-font-size">Font and font size</a></li>
+<li><a class="reference internal" href="#logo">Logo</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#north-arrow">North Arrow</a></li>
 </ul>
 </li>
@@ -115,12 +154,12 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the QuickPrint plugin documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">quickprint 3.2 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">quickprint 3.4.5 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2017, Marco Duiker (MD-kwadraat).
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>
 </html>

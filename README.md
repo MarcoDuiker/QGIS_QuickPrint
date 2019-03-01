@@ -7,6 +7,6 @@ In this way you get a decent print without the hassle of setting up and using pr
 
 You can choose between A3 and A4 paper sizes and between portrait and landscape paper orientation.
 
-How to add your logo is explained in the [help](https://marcoduiker.github.io/QGIS_QuickPrint/help/build/html/introduction.html). 
+Via the settings you can change font and font size, date formatting and add a logo to the map. This is explained in the [help](https://marcoduiker.github.io/QGIS_QuickPrint/help/build/html/introduction.html). 
 
 Please refer to metadata.txt for source code repository and bug tracking.
