@@ -5,4 +5,7 @@
     <qresource prefix="/plugins/QuickPrint3" >
         <file>help.png</file>
     </qresource>
+    <qresource prefix="/plugins/QuickPrint3" >
+        <file>settings.png</file>
+    </qresource>
 </RCC>

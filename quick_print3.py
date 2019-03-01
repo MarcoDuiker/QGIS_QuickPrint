@@ -32,6 +32,7 @@ from qgis.utils import *
 from .resources import *
 # Import the code for the dialog
 from .quick_print3_dialog import QuickPrint3Dialog
+from .quick_print3_settings_dialog import QuickPrint3SettingsDialog
 
 import os.path
 import time
@@ -39,6 +40,8 @@ import sys
 import subprocess
 import webbrowser
 
+__author__ = 'Marco Duiker MD-kwadraat'
+__date__ = 'Februari 2019'
 
 class QuickPrint3:
     """QGIS Plugin Implementation."""
@@ -56,6 +59,17 @@ class QuickPrint3:
         self.iface = iface
         # initialize plugin directory
         self.plugin_dir = os.path.dirname(__file__)
+        
+        # get the settings
+        self.settings = QSettings()
+        self.dateFormatString = self.settings.value("MapLibrary/date_format_string", "{day}-{month}-{year}")
+        self.logoImagePath = self.settings.value("MapLibrary/logo_path", "")
+        if not self.logoImagePath \
+        and os.path.exists(os.path.join(self.plugin_dir, 'img', 'logo.png')):
+            self.logoImagePath = os.path.join(self.plugin_dir, 'img', 'logo.png')
+        self.textFont = self.settings.value("MapLibrary/text_font", "Arial")
+        self.fontSize = int(self.settings.value("MapLibrary/font_size", 100))
+        
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
@@ -72,12 +86,15 @@ class QuickPrint3:
 
         # Create the dialog (after translation) and keep reference
         self.dlg = QuickPrint3Dialog()
+        self.settings_dlg = QuickPrint3SettingsDialog()
 
         # add some necessary signal and slot communication as well as disable the save button for now  
         self.dlg.cancel_save_button_box.button(QDialogButtonBox.Save).setEnabled(False)
 
         self.dlg.fileBrowseButton.clicked.connect(self.chooseFile)
         self.dlg.pdfFileNameBox.textChanged.connect(self.pdfFileNameBoxChanged)
+        
+        self.settings_dlg.fileBrowseButton.clicked.connect(self.choose_logo_file)
 
         # Declare instance attributes
         self.actions = []
@@ -186,6 +203,14 @@ class QuickPrint3:
             callback=self.run,
             parent=self.iface.mainWindow())
             
+        icon_path = ':/plugins/QuickPrint3/settings.png'
+        self.add_action(
+            icon_path,
+            text=self.tr(u'Settings'),
+            callback=self.run_settings,
+            parent=self.iface.mainWindow(),
+            add_to_toolbar=False)
+            
         icon_path = ':/plugins/QuickPrint3/help.png'
         self.add_action(
             icon_path,
@@ -253,7 +278,53 @@ class QuickPrint3:
             self.plugin_dir, 'help/build/html','index.html')))
         #webbrowser.open_new(os.path.join("file://",os.path.abspath(self.plugin_dir), 'help/build/html','index.html')) 
 
+    def choose_logo_file(self):
+        '''
+        Allows the user to choose a local path for the logo.
+        '''
+        
+        path = QFileDialog.getOpenFileName(
+                    caption = self.tr(u"Select Logo image file:"), 
+                    directory = self.plugin_dir, 
+                    filter = self.tr(u"Images (*.png *.jpg)"))[0]       
+        self.settings_dlg.logo_path_ldt.setText(path)
+        
 
+    def run_settings(self):
+        '''
+        method showing the settings dialog and act on the results
+        '''
+        
+        if not self.logoImagePath:
+            self.settings_dlg.logo_path_ldt.setPlaceholderText("https://")
+        self.settings_dlg.logo_path_ldt.setText(self.logoImagePath)
+        self.settings_dlg.date_format_ldt.setText(self.dateFormatString)
+        self.settings_dlg.fontComboBox.setCurrentFont(QFont(self.textFont))
+        self.settings_dlg.font_size_sld.setValue(int(self.fontSize))
+
+        self.settings_dlg.show()
+        
+        result = self.settings_dlg.exec_()
+        if result:
+            path = unicode(self.settings_dlg.logo_path_ldt.text())
+            if path[0:4] == 'http':
+                # urlEncode?
+                pass
+            else:
+                # make more canonical?
+                pass
+            self.logoImagePath = path
+            self.settings.setValue("MapLibrary/logo_path", self.logoImagePath)
+            
+            self.dateFormatString = unicode(self.settings_dlg.date_format_ldt.text())
+            self.settings.setValue("MapLibrary/date_format_string", self.dateFormatString)
+        
+            self.textFont = self.settings_dlg.fontComboBox.currentFont().family()
+            self.settings.setValue("MapLibrary/text_font", self.textFont)
+            
+            self.fontSize = self.settings_dlg.font_size_sld.value()
+            self.settings.setValue("MapLibrary/font_size", self.fontSize)
+            
     def run(self):
         '''
         methods doing most of the work.
@@ -265,6 +336,8 @@ class QuickPrint3:
         if result:
 
             QGuiApplication.setOverrideCursor(Qt.WaitCursor)
+            
+            font_scale = float(self.fontSize) / 100
 
             dpi = 600
             # get the users input 
@@ -310,7 +383,7 @@ class QuickPrint3:
             l.addItem(theMap)
             
             # add title
-            titleFont = QFont("Arial", 14)
+            titleFont = QFont(self.textFont, int(font_scale * 14))
             titleFont.setBold(True)
 
             titelLabel = QgsLayoutItemLabel(l)
@@ -321,7 +394,7 @@ class QuickPrint3:
             l.addItem(titelLabel)
 
             # add subtitle
-            subTitleFont = QFont("Arial", 12)
+            subTitleFont = QFont(self.textFont, int(font_scale * 12))
             subTitleFont.setBold(False)
                 
             subTitelLabel = QgsLayoutItemLabel(l)
@@ -331,27 +404,28 @@ class QuickPrint3:
             subTitelLabel.adjustSizeToText()
             l.addItem(subTitelLabel)  
 
-            textFont = QFont("Arial", 10)  
+            textFont = QFont(self.textFont, int(font_scale * 10))  
 
             # add logo
-            logoImagePath = os.path.join(self.plugin_dir, 'img', 'logo.png')
-            if os.path.exists(logoImagePath) and os.path.isfile(logoImagePath):
+            
+            if self.logoImagePath:
                 try:
                     logo = QgsLayoutItemPicture(l)
-                    logo.setPicturePath(logoImagePath)
+                    logo.setPicturePath(self.logoImagePath)
                     logo.attemptSetSceneRect(QRectF((paperSize[0] - paperSize[0] / 3), 0, refSize / 3, refSize / 3 * 756 / 2040 )) 
                     # logo.setFrameEnabled(True)
                     l.addItem(logo)
                 except:
                     # failed to add the logo, show message and continue
                     self.iface.messageBar().pushMessage("Warning", self.tr(u"Failed adding logo ") + \
-                                                        os.path.basename(logoImagePath), 
+                                                        self.logoImagePath, 
                                                         Qgis.Warning)
 
             #add date
             dateLabel = QgsLayoutItemLabel(l)
             d = time.localtime()
-            dString = "%d-%d-%d" % (d[2],  d[1],  d[0])
+            #dString = "%d-%d-%d" % (d[2],  d[1],  d[0])
+            dString = self.dateFormatString.format(day = d[2], month = d[1], year = d[0])
             dateLabel.setText(dString)
             dateLabel.setFont(textFont)
             dateLabel.adjustSizeToText()
@@ -383,7 +457,7 @@ class QuickPrint3:
             opmLabel = QgsLayoutItemLabel(l)
             opmLabel.setText(opmerkingen)
             opmLabel.setFont(textFont)
-            opmLabel.adjustSizeToText()	            	# Doesn't work for multiline stuff, hence:
+            opmLabel.adjustSizeToText()	            # Doesn't work for multiline stuff, hence:
             opmLabel.attemptSetSceneRect(QRectF(lm, paperSize[1] - 10, paperSize[0] - lm -lm , 400 )) 
             l.addItem(opmLabel)
             

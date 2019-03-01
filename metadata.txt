@@ -11,7 +11,7 @@ name=QuickPrint
 qgisMinimumVersion=2.99
 qgisMaximumVersion=3.99
 description=The QuickPrint Plugin for QGIS3
-version=3.4.4
+version=3.4.5
 author=Marco Duiker MD-kwadraat
 email=info@md-kwadraat.nl
 
@@ -28,7 +28,7 @@ repository=https://github.com/MarcoDuiker/QGIS_QuickPrint/
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-changelog=added Dutch translation
+changelog=added settings for date format, logo and font.
 
 # Tags are comma separated with spaces allowed
 tags=print template
