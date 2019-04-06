@@ -62,13 +62,13 @@ class QuickPrint3:
         
         # get the settings
         self.settings = QSettings()
-        self.dateFormatString = self.settings.value("MapLibrary/date_format_string", "{day}-{month}-{year}")
-        self.logoImagePath = self.settings.value("MapLibrary/logo_path", "")
+        self.dateFormatString = self.settings.value("QuickPrint/date_format_string", "{day}-{month}-{year}")
+        self.logoImagePath = self.settings.value("QuickPrint/logo_path", "")
         if not self.logoImagePath \
         and os.path.exists(os.path.join(self.plugin_dir, 'img', 'logo.png')):
             self.logoImagePath = os.path.join(self.plugin_dir, 'img', 'logo.png')
-        self.textFont = self.settings.value("MapLibrary/text_font", "Arial")
-        self.fontSize = int(self.settings.value("MapLibrary/font_size", 100))
+        self.textFont = self.settings.value("QuickPrint/text_font", "Arial")
+        self.fontSize = int(self.settings.value("QuickPrint/font_size", 100))
         
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
@@ -314,16 +314,16 @@ class QuickPrint3:
                 # make more canonical?
                 pass
             self.logoImagePath = path
-            self.settings.setValue("MapLibrary/logo_path", self.logoImagePath)
+            self.settings.setValue("QuickPrint/logo_path", self.logoImagePath)
             
             self.dateFormatString = unicode(self.settings_dlg.date_format_ldt.text())
-            self.settings.setValue("MapLibrary/date_format_string", self.dateFormatString)
+            self.settings.setValue("QuickPrint/date_format_string", self.dateFormatString)
         
             self.textFont = self.settings_dlg.fontComboBox.currentFont().family()
-            self.settings.setValue("MapLibrary/text_font", self.textFont)
+            self.settings.setValue("QuickPrint/text_font", self.textFont)
             
             self.fontSize = self.settings_dlg.font_size_sld.value()
-            self.settings.setValue("MapLibrary/font_size", self.fontSize)
+            self.settings.setValue("QuickPrint/font_size", self.fontSize)
             
     def run(self):
         '''
