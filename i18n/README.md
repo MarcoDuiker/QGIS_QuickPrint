@@ -6,7 +6,7 @@ Update the language file with changes in gui and code
 
 	pylupdate5 QuickPrint.pro
 	
-Add translations by editing `QuickPrint_nl.ts` (it is an xml file).
+Add translations by editing `QuickPrint3_nl.ts` (it is an xml file).
 
 Release the translations with:
 

@@ -20,7 +20,8 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt5.QtCore import Qt, QSettings, QTranslator, qVersion, QCoreApplication, QRectF, QUrl
+from PyQt5.QtCore import Qt, QSettings, QTranslator, qVersion, \
+                         QCoreApplication, QRectF, QUrl
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
@@ -62,13 +63,16 @@ class QuickPrint3:
         
         # get the settings
         self.settings = QSettings()
-        self.dateFormatString = self.settings.value("QuickPrint/date_format_string", "{day}-{month}-{year}")
+        self.dateFormatString = self.settings.value(
+                "QuickPrint/date_format_string", "{day}-{month}-{year}")
         self.logoImagePath = self.settings.value("QuickPrint/logo_path", "")
         if not self.logoImagePath \
         and os.path.exists(os.path.join(self.plugin_dir, 'img', 'logo.png')):
             self.logoImagePath = os.path.join(self.plugin_dir, 'img', 'logo.png')
         self.textFont = self.settings.value("QuickPrint/text_font", "Arial")
         self.fontSize = int(self.settings.value("QuickPrint/font_size", 100))
+        self.paper_size_standard = self.settings.value(
+                "QuickPrint/paper_size_standard", "DIN")
         
         # initialize locale
         locale = QSettings().value('locale/userLocale')[0:2]
@@ -88,13 +92,23 @@ class QuickPrint3:
         self.dlg = QuickPrint3Dialog()
         self.settings_dlg = QuickPrint3SettingsDialog()
 
-        # add some necessary signal and slot communication as well as disable the save button for now  
+        # add some necessary signal and slot communication as well 
+        # as disable the save button for now  
         self.dlg.cancel_save_button_box.button(QDialogButtonBox.Save).setEnabled(False)
 
         self.dlg.fileBrowseButton.clicked.connect(self.chooseFile)
         self.dlg.pdfFileNameBox.textChanged.connect(self.pdfFileNameBoxChanged)
         
         self.settings_dlg.fileBrowseButton.clicked.connect(self.choose_logo_file)
+        
+        # and change the labels according to paper size standard
+        if self.paper_size_standard == "DIN":
+            self.dlg.a4Btn.setText("A4")
+            self.dlg.a3Btn.setText("A3")
+        else:
+            self.dlg.a4Btn.setText("ANSI-A")
+            self.dlg.a3Btn.setText("ANSI-B")
+            
 
         # Declare instance attributes
         self.actions = []
@@ -185,7 +199,7 @@ class QuickPrint3:
             self.toolbar.addAction(action)
 
         if add_to_menu:                     # if we use addPluginToMenu, 
-            self.iface.addPluginToWebMenu(  # the toolbar is added to the plugins toolbar
+            self.iface.addPluginToWebMenu(  # toolbar is added to plugins toolbar
                 self.menu,
                 action)
 
@@ -235,19 +249,25 @@ class QuickPrint3:
         Get's paper size from dialog
         '''
 
-        paperSize = 'A4'
+        # paperSize = 'A4'
         longSide = 297
         shortSide = 210
+        if self.paper_size_standard == "ANSI":
+            longSide = 279
+            shortSide = 216
         if self.dlg.a3Btn.isChecked():
-            paperSize = 'A3'
+            # paperSize = 'A3'
             longSide = 420
             shortSide = 297
+            if self.paper_size_standard == "ANSI":
+                longSide = 432
+                shortSide = 279
 
-        paperOrientation = 'portrait'
+        # paperOrientation = 'portrait'
         width = shortSide
         height = longSide
         if self.dlg.landschapBtn.isChecked():
-            paperOrientation = 'landscape'
+            # paperOrientation = 'landscape'
             width = longSide
             height = shortSide
 
@@ -258,7 +278,8 @@ class QuickPrint3:
         shows file chooser
         '''
 
-        fileName, __ = QFileDialog.getSaveFileName(caption = self.tr(u"save pdf"), directory = '', filter = '*.pdf')
+        fileName, __ = QFileDialog.getSaveFileName(
+            caption = self.tr(u"save pdf"), directory = '', filter = '*.pdf')
         self.dlg.pdfFileNameBox.setText(fileName)
         
     def pdfFileNameBoxChanged(self, fileName):
@@ -276,7 +297,8 @@ class QuickPrint3:
 
         QDesktopServices().openUrl(QUrl.fromLocalFile(os.path.join("file://",
             self.plugin_dir, 'help/build/html','index.html')))
-        #webbrowser.open_new(os.path.join("file://",os.path.abspath(self.plugin_dir), 'help/build/html','index.html')) 
+        #webbrowser.open_new(os.path.join("file://",
+        #   os.path.abspath(self.plugin_dir), 'help/build/html','index.html')) 
 
     def choose_logo_file(self):
         '''
@@ -301,6 +323,10 @@ class QuickPrint3:
         self.settings_dlg.date_format_ldt.setText(self.dateFormatString)
         self.settings_dlg.fontComboBox.setCurrentFont(QFont(self.textFont))
         self.settings_dlg.font_size_sld.setValue(int(self.fontSize))
+        if self.paper_size_standard == "DIN":
+            self.settings_dlg.paper_size_din_rbn.setChecked(True)
+        else:
+            self.settings_dlg.paper_size_ansi_rbn.setChecked(True)
 
         self.settings_dlg.show()
         
@@ -324,7 +350,18 @@ class QuickPrint3:
             
             self.fontSize = self.settings_dlg.font_size_sld.value()
             self.settings.setValue("QuickPrint/font_size", self.fontSize)
-            
+
+            if self.settings_dlg.paper_size_din_rbn.isChecked():
+                self.paper_size_standard = "DIN"
+                self.dlg.a4Btn.setText("A4")
+                self.dlg.a3Btn.setText("A3")
+            else:
+                self.paper_size_standard = "ANSI"
+                self.dlg.a4Btn.setText("ANSI-A")
+                self.dlg.a3Btn.setText("ANSI-B")
+            self.settings.setValue("QuickPrint/paper_size_standard", 
+                self.paper_size_standard)
+
     def run(self):
         '''
         methods doing most of the work.
@@ -417,9 +454,10 @@ class QuickPrint3:
                     l.addItem(logo)
                 except:
                     # failed to add the logo, show message and continue
-                    self.iface.messageBar().pushMessage("Warning", self.tr(u"Failed adding logo ") + \
-                                                        self.logoImagePath, 
-                                                        Qgis.Warning)
+                    self.iface.messageBar().pushMessage(
+                        "Warning", self.tr(u"Failed adding logo ") + \
+                        self.logoImagePath, 
+                        Qgis.Warning)
 
             #add date
             dateLabel = QgsLayoutItemLabel(l)
