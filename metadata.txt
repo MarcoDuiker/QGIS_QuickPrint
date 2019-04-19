@@ -11,7 +11,7 @@ name=QuickPrint
 qgisMinimumVersion=2.99
 qgisMaximumVersion=3.99
 description=The QuickPrint Plugin for QGIS3
-version=3.5.0
+version=3.5.1
 author=Marco Duiker MD-kwadraat
 email=info@md-kwadraat.nl
 
