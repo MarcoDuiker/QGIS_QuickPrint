@@ -19,7 +19,7 @@ about=The QuickPrint plug-in provides a simple way to quickly create a pdf from 
 
     The map is not just a screenshot, but a real map with a title, subtitle, scalebar, date, attribution and remarks. In this way you get a decent print without the hassle of setting up and using print templates. 
 
-    You can choose between A3 and A4 paper sizes and between portrait and landscape paper orientation.
+    You can choose between A3 and A4 (or ANSI-A and ANSI-B) paper sizes and between portrait and landscape paper orientation.
 
     Some customizations are possible, like putting a logo on the page and setting a different font and font size.
 
