@@ -7,21 +7,46 @@
     <x>0</x>
     <y>0</y>
     <width>453</width>
-    <height>254</height>
+    <height>376</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <weight>50</weight>
+    <bold>false</bold>
+   </font>
   </property>
   <property name="windowTitle">
    <string>QuickPrint Settings</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="6" column="0">
+    <spacer name="verticalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Font for titles, etc:</string>
+      <string>Font for titles, etc</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="3">
+   <item row="11" column="3">
     <widget class="QPushButton" name="fileBrowseButton">
      <property name="toolTip">
       <string>Browse to a local image file to use as a logo</string>
@@ -31,7 +56,7 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="2" colspan="2">
+   <item row="13" column="2" colspan="2">
     <widget class="QDialogButtonBox" name="cancel_save_button_box">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -41,7 +66,7 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="4">
+   <item row="8" column="0" colspan="4">
     <widget class="QLineEdit" name="date_format_ldt">
      <property name="statusTip">
       <string>Supply a Python format string for date formatting</string>
@@ -51,7 +76,7 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="9" column="0">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -64,20 +89,32 @@
      </property>
     </spacer>
    </item>
-   <item row="6" column="0" colspan="2">
+   <item row="10" column="0" colspan="2">
     <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Logo:</string>
+      <string>Logo</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="3">
+   <item row="7" column="0" colspan="3">
     <widget class="QLabel" name="opmerkingenLbl">
      <property name="enabled">
       <bool>true</bool>
      </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Date format (Python format string):</string>
+      <string>Date format (Python format string)</string>
      </property>
     </widget>
    </item>
@@ -88,7 +125,7 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="0" colspan="3">
+   <item row="11" column="0" colspan="3">
     <widget class="QLineEdit" name="logo_path_ldt">
      <property name="toolTip">
       <string>Path to a logo image. Can be a URL starting with http or a local file</string>
@@ -114,7 +151,7 @@
      </property>
     </spacer>
    </item>
-   <item row="8" column="0">
+   <item row="12" column="0">
     <spacer name="verticalSpacer_3">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -142,8 +179,14 @@
    </item>
    <item row="0" column="2">
     <widget class="QLabel" name="label_3">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Font size:</string>
+      <string>Font size</string>
      </property>
     </widget>
    </item>
@@ -182,6 +225,35 @@
      <property name="text">
       <string>aA</string>
      </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="font">
+      <font>
+       <weight>50</weight>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="title">
+      <string>Paper size standard</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QRadioButton" name="paper_size_din_rbn">
+        <property name="text">
+         <string>Din (A4, A3)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="paper_size_ansi_rbn">
+        <property name="text">
+         <string>ANSI (A, B)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

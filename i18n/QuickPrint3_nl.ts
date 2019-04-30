@@ -91,47 +91,47 @@
 <context>
     <name>QuickPrint3</name>
     <message>
-        <location filename="../quick_print3.py" line="226"/>
+        <location filename="../quick_print3.py" line="240"/>
         <source>&amp;QuickPrint</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="215"/>
+        <location filename="../quick_print3.py" line="229"/>
         <source>Help</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="261"/>
+        <location filename="../quick_print3.py" line="281"/>
         <source>save pdf</source>
         <translation>pdf opslaan</translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="420"/>
+        <location filename="../quick_print3.py" line="457"/>
         <source>Failed adding logo </source>
         <translation>Toevoegen logo mislukt </translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="470"/>
+        <location filename="../quick_print3.py" line="508"/>
         <source>Saved as pdf: </source>
         <translation>Opgeslagen als pdf: </translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="200"/>
+        <location filename="../quick_print3.py" line="214"/>
         <source>QuickPrint</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="207"/>
+        <location filename="../quick_print3.py" line="221"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="286"/>
+        <location filename="../quick_print3.py" line="308"/>
         <source>Select Logo image file:</source>
         <translation>Selecteer afbeeldingsbestand als logo:</translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="286"/>
+        <location filename="../quick_print3.py" line="308"/>
         <source>Images (*.png *.jpg)</source>
         <translation>Afbeeldingen (*.png *.jpg)</translation>
     </message>
@@ -139,69 +139,94 @@
 <context>
     <name>QuickPrint3SettingsDialog</name>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="14"/>
-        <source>QuickPrint Settings</source>
-        <translation>QuickPrint Instellingen</translation>
-    </message>
-    <message>
         <location filename="../quick_print3_settings_dialog_base.ui" line="20"/>
-        <source>Font for titles, etc:</source>
-        <translation>Lettertype voor titels, etc:</translation>
+        <source>QuickPrint Settings</source>
+        <translation type="obsolete">Lettertype voor titels, etc:</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="27"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="52"/>
         <source>Browse to a local image file to use as a logo</source>
         <translation>Blader naar een lokaal afbeeldingsbestand om as logo te gebruiken</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="30"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="55"/>
         <source>Browse</source>
         <translation>Bladeren</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="47"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="72"/>
         <source>Supply a Python format string for date formatting</source>
         <translation>Geef een Python opmaak tekenreeks voor datum opmaak</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="70"/>
-        <source>Logo:</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../quick_print3_settings_dialog_base.ui" line="80"/>
         <source>Date format (Python format string):</source>
-        <translation>Datum opmaak (Python opmaak tekenreeks):</translation>
+        <translation type="obsolete">Datum opmaak (Python opmaak tekenreeks):</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="87"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="124"/>
         <source>Choose a font for titles and text around the map</source>
         <translation>Kies een lettertype voor titels en teksten rond de kaart</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="94"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="131"/>
         <source>Path to a logo image. Can be a URL starting with http or a local file</source>
         <translation>Pad naar afbeeldingsbestand voor logo. Kan een URL zijn beginnend met http of een lokaal bestand</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="100"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="137"/>
         <source>https://</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="183"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="226"/>
         <source>aA</source>
         <translation></translation>
     </message>
     <message>
         <location filename="../quick_print3_settings_dialog_base.ui" line="146"/>
         <source>Font size:</source>
-        <translation>Lettergrootte:</translation>
+        <translation type="obsolete">Lettergrootte:</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="153"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="196"/>
         <source>Set font size smaller or larger than default (the middle)</source>
         <translation>Stel lettergrootte kleiner of groter in dan standaard (het midden)</translation>
+    </message>
+    <message>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="45"/>
+        <source>Font for titles, etc</source>
+        <translation>Lettertype voor titels, etc</translation>
+    </message>
+    <message>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="101"/>
+        <source>Logo</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="117"/>
+        <source>Date format (Python format string)</source>
+        <translation>Datum opmaak (Python opmaak tekenreeks)</translation>
+    </message>
+    <message>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="189"/>
+        <source>Font size</source>
+        <translation>Lettergrootte</translation>
+    </message>
+    <message>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="239"/>
+        <source>Paper size standard</source>
+        <translation>Standaard voor papierformaten</translation>
+    </message>
+    <message>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="245"/>
+        <source>Din (A4, A3)</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="252"/>
+        <source>ANSI (A, B)</source>
+        <translation></translation>
     </message>
 </context>
 </TS>

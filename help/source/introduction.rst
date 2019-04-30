@@ -22,11 +22,20 @@ Settings
 
 The new settings dialog allows you to:
 
+   - set the standard for paper sizes
    - change the date formatting
    - change the font and font size for the texts around the map
    - select an image to use as a logo
 
 If you don't use this settings dialog, QuickPrint will work just as you are used to.
+
+
+Set the standard for paper sizes
+''''''''''''''''''''''''''''''''
+
+The QuickPrint plugin can now work with either DIN paper sizes (A3 and A4) or ANSI paper sizes (ANSI-A and ANSI-B).
+
+Choose an option which suites you most.
 
 
 Date formatting
