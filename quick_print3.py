@@ -20,7 +20,7 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt5.QtCore import Qt, QSettings, QTranslator, qVersion, \
+from PyQt5.QtCore import Qt, QTranslator, qVersion, \
                          QCoreApplication, QRectF, QUrl
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -62,7 +62,7 @@ class QuickPrint3:
         self.plugin_dir = os.path.dirname(__file__)
         
         # get the settings
-        self.settings = QSettings()
+        self.settings = QgsSettings()
         self.dateFormatString = self.settings.value(
                 "QuickPrint/date_format_string", "{day}-{month}-{year}")
         self.logoImagePath = self.settings.value("QuickPrint/logo_path", "")
@@ -73,9 +73,11 @@ class QuickPrint3:
         self.fontSize = int(self.settings.value("QuickPrint/font_size", 100))
         self.paper_size_standard = self.settings.value(
                 "QuickPrint/paper_size_standard", "DIN")
+        self.default_bronnen = self.settings.value("QuickPrint/attribution", self.tr("Attribution:"))
+        self.default_opmerking = self.settings.value("QuickPrint/remark", "")
         
         # initialize locale
-        locale = QSettings().value('locale/userLocale')[0:2]
+        locale = QgsSettings().value('locale/userLocale')[0:2]
         locale_path = os.path.join(
             self.plugin_dir,
             'i18n',
@@ -108,7 +110,12 @@ class QuickPrint3:
         else:
             self.dlg.a4Btn.setText("ANSI-A")
             self.dlg.a3Btn.setText("ANSI-B")
-            
+
+        # and apply default remark and attribution if necessary
+        if not self.dlg.bronnenFld.toPlainText():
+            self.dlg.bronnenFld.setPlainText(self.default_bronnen)
+        if not self.dlg.opmerkingenFld.toPlainText():
+            self.dlg.opmerkingenFld.setPlainText(self.default_opmerking)
 
         # Declare instance attributes
         self.actions = []
@@ -280,6 +287,8 @@ class QuickPrint3:
 
         fileName, __ = QFileDialog.getSaveFileName(
             caption = self.tr(u"save pdf"), directory = '', filter = '*.pdf')
+        if not fileName[-4:].lower().strip() == '.pdf':
+            fileName = '%s.pdf' % fileName
         self.dlg.pdfFileNameBox.setText(fileName)
         
     def pdfFileNameBoxChanged(self, fileName):
@@ -323,6 +332,8 @@ class QuickPrint3:
         self.settings_dlg.date_format_ldt.setText(self.dateFormatString)
         self.settings_dlg.fontComboBox.setCurrentFont(QFont(self.textFont))
         self.settings_dlg.font_size_sld.setValue(int(self.fontSize))
+        self.settings_dlg.default_attribition_tbx.setPlainText(self.default_bronnen)
+        self.settings_dlg.default_remark_ldt.setPlainText(self.default_opmerking)
         if self.paper_size_standard == "DIN":
             self.settings_dlg.paper_size_din_rbn.setChecked(True)
         else:
@@ -350,6 +361,11 @@ class QuickPrint3:
             
             self.fontSize = self.settings_dlg.font_size_sld.value()
             self.settings.setValue("QuickPrint/font_size", self.fontSize)
+
+            self.default_bronnen = self.settings_dlg.default_attribition_tbx.toPlainText()
+            self.settings.setValue("QuickPrint/attribution", self.default_bronnen )
+            self.default_opmerking =  self.settings_dlg.default_remark_ldt.toPlainText()
+            self.settings.setValue("QuickPrint/remark", self.default_opmerking)
 
             if self.settings_dlg.paper_size_din_rbn.isChecked():
                 self.paper_size_standard = "DIN"
@@ -382,7 +398,7 @@ class QuickPrint3:
             subTitel = self.dlg.subTitelFld.text()
     
             bronnen = self.dlg.bronnenFld.toPlainText()
-            opmerkingen = self.dlg.opmerkingenFld.toPlainText ()
+            opmerkingen = self.dlg.opmerkingenFld.toPlainText()
 
             project = QgsProject.instance()
             l = QgsPrintLayout(project)

@@ -11,8 +11,8 @@ name=QuickPrint
 qgisMinimumVersion=2.99
 qgisMaximumVersion=3.99
 description=The QuickPrint Plugin for QGIS3
-version=3.5.1
-author=Marco Duiker MD-kwadraat
+version=3.6.0
+author=Marco Duiker - MD-kwadraat
 email=info@md-kwadraat.nl
 
 about=The QuickPrint plug-in provides a simple way to quickly create a pdf from the map as shown in the map pane. 
@@ -21,7 +21,7 @@ about=The QuickPrint plug-in provides a simple way to quickly create a pdf from 
 
     You can choose between A3 and A4 (or ANSI-A and ANSI-B) paper sizes and between portrait and landscape paper orientation.
 
-    Some customizations are possible, like putting a logo on the page and setting a different font and font size.
+    Some customizations are possible, like putting a logo on the page and setting a different font and font size. Now, it is also possible to set a default attribution and a default remark.
 
 tracker=https://github.com/MarcoDuiker/QGIS_QuickPrint/issues
 repository=https://github.com/MarcoDuiker/QGIS_QuickPrint/
@@ -30,7 +30,7 @@ repository=https://github.com/MarcoDuiker/QGIS_QuickPrint/
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-changelog=support for ANSI-paper sizes; save settings under an appropriate name.
+changelog=Added default attribution and remarks; moved settings to QgsSettings; improved file name handling.
 
 # Tags are comma separated with spaces allowed
 tags=print template

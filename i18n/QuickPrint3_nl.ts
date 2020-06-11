@@ -20,7 +20,7 @@
     <message>
         <location filename="../quick_print3_dialog_base.ui" line="44"/>
         <source>Attribution:</source>
-        <translation>Bronnen:</translation>
+        <translation type="obsolete">Bronnen:</translation>
     </message>
     <message>
         <location filename="../quick_print3_dialog_base.ui" line="54"/>
@@ -91,49 +91,54 @@
 <context>
     <name>QuickPrint3</name>
     <message>
-        <location filename="../quick_print3.py" line="240"/>
+        <location filename="../quick_print3.py" line="247"/>
         <source>&amp;QuickPrint</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="229"/>
+        <location filename="../quick_print3.py" line="236"/>
         <source>Help</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="281"/>
+        <location filename="../quick_print3.py" line="288"/>
         <source>save pdf</source>
         <translation>pdf opslaan</translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="457"/>
+        <location filename="../quick_print3.py" line="473"/>
         <source>Failed adding logo </source>
         <translation>Toevoegen logo mislukt </translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="508"/>
+        <location filename="../quick_print3.py" line="524"/>
         <source>Saved as pdf: </source>
         <translation>Opgeslagen als pdf: </translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="214"/>
+        <location filename="../quick_print3.py" line="221"/>
         <source>QuickPrint</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="221"/>
+        <location filename="../quick_print3.py" line="228"/>
         <source>Settings</source>
         <translation>Instellingen</translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="308"/>
+        <location filename="../quick_print3.py" line="317"/>
         <source>Select Logo image file:</source>
         <translation>Selecteer afbeeldingsbestand als logo:</translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="308"/>
+        <location filename="../quick_print3.py" line="317"/>
         <source>Images (*.png *.jpg)</source>
         <translation>Afbeeldingen (*.png *.jpg)</translation>
+    </message>
+    <message>
+        <location filename="../quick_print3.py" line="76"/>
+        <source>Attribution:</source>
+        <translation>Bronnen:</translation>
     </message>
 </context>
 <context>
@@ -141,7 +146,7 @@
     <message>
         <location filename="../quick_print3_settings_dialog_base.ui" line="20"/>
         <source>QuickPrint Settings</source>
-        <translation type="obsolete">Lettertype voor titels, etc:</translation>
+        <translation>Lettertype voor titels, etc:</translation>
     </message>
     <message>
         <location filename="../quick_print3_settings_dialog_base.ui" line="52"/>
@@ -179,7 +184,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="226"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="213"/>
         <source>aA</source>
         <translation></translation>
     </message>
@@ -189,7 +194,7 @@
         <translation type="obsolete">Lettergrootte:</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="196"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="183"/>
         <source>Set font size smaller or larger than default (the middle)</source>
         <translation>Stel lettergrootte kleiner of groter in dan standaard (het midden)</translation>
     </message>
@@ -209,24 +214,34 @@
         <translation>Datum opmaak (Python opmaak tekenreeks)</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="189"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="176"/>
         <source>Font size</source>
         <translation>Lettergrootte</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="239"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="226"/>
         <source>Paper size standard</source>
         <translation>Standaard voor papierformaten</translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="245"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="232"/>
         <source>Din (A4, A3)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../quick_print3_settings_dialog_base.ui" line="252"/>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="239"/>
         <source>ANSI (A, B)</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="281"/>
+        <source>Default bottom remark</source>
+        <translation>Standaard opmerking</translation>
+    </message>
+    <message>
+        <location filename="../quick_print3_settings_dialog_base.ui" line="294"/>
+        <source>Default Attribution</source>
+        <translation>Standaard Bronnen vermelding</translation>
     </message>
 </context>
 </TS>
