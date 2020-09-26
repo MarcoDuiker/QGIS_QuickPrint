@@ -521,15 +521,21 @@ class QuickPrint3:
             exporter.exportToPdf(self.dlg.pdfFileNameBox.displayText(), pdf_settings)
 
             # inform the user about the result
-            self.iface.messageBar().pushMessage("Info", self.tr(u"Saved as pdf: ") + \
-                                                self.dlg.pdfFileNameBox.displayText(),
-                                                Qgis.Info)
-            # and if user wants so open the file
-            if self.dlg.openAfterSaveBox.isChecked():
-                if sys.platform.startswith('linux'):
-                    subprocess.call(["xdg-open", self.dlg.pdfFileNameBox.displayText()])
-                else:
-                    # windows only
-                    os.startfile(self.dlg.pdfFileNameBox.displayText())
+            if os.path.exists(self.dlg.pdfFileNameBox.displayText()):
+                self.iface.messageBar().pushMessage("Info", self.tr(u"Saved as pdf: ") + \
+                                                    self.dlg.pdfFileNameBox.displayText(),
+                                                    Qgis.Info)
+                # and if user wants so open the file
+                if self.dlg.openAfterSaveBox.isChecked():
+                    if hasattr(os, 'startfile'):
+                        # windows only
+                        os.startfile(self.dlg.pdfFileNameBox.displayText())
+                    else:
+                        subprocess.call(["xdg-open", self.dlg.pdfFileNameBox.displayText()])
+            else:
+                self.iface.messageBar().pushMessage(
+                    "Warning", self.tr(u"Failed saving file ") + \
+                    self.dlg.pdfFileNameBox.displayText(), 
+                    Qgis.Warning)
 
             QGuiApplication.restoreOverrideCursor()

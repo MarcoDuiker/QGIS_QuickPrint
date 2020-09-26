@@ -111,7 +111,7 @@
         <translation>Toevoegen logo mislukt </translation>
     </message>
     <message>
-        <location filename="../quick_print3.py" line="524"/>
+        <location filename="../quick_print3.py" line="525"/>
         <source>Saved as pdf: </source>
         <translation>Opgeslagen als pdf: </translation>
     </message>
@@ -139,6 +139,11 @@
         <location filename="../quick_print3.py" line="76"/>
         <source>Attribution:</source>
         <translation>Bronnen:</translation>
+    </message>
+    <message>
+        <location filename="../quick_print3.py" line="536"/>
+        <source>Failed saving file </source>
+        <translation>Bestand opslaan mislukt </translation>
     </message>
 </context>
 <context>
