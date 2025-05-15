@@ -97,13 +97,24 @@ class QuickPrint3:
         # add some necessary signal and slot communication as well 
         # as disable the save button for now  
         self.dlg.cancel_save_button_box.button(QDialogButtonBox.Save).setEnabled(False)
-
-        self.dlg.fileBrowseButton.clicked.connect(self.chooseFile)
-        self.dlg.pdfFileNameBox.textChanged.connect(self.pdfFileNameBoxChanged)
         
-        self.settings_dlg.fileBrowseButton.clicked.connect(self.choose_logo_file)
+        self.dlg.file_name_qfw.setFilter('*.pdf,*.png')
+        self.dlg.file_name_qfw.fileChanged.connect(self.fileNameBoxChanged)
         
-        # and change the labels according to paper size standard
+        #update the preview when the mapcanvas has changed or the
+        #dialog is resized or changed
+        self.iface.mapCanvas().renderComplete.connect(self.update_preview)
+        self.dlg.preview_lbl.resizeEvent = self.update_preview
+        self.dlg.logo_cbx.stateChanged.connect(self.update_preview)
+        self.dlg.northarrow_cbx.stateChanged.connect(self.update_preview)
+        self.dlg.a4Btn.toggled.connect(self.update_preview)
+        self.dlg.portretBtn.toggled.connect(self.update_preview)
+        self.dlg.titelFld.textChanged.connect(self.update_preview)
+        self.dlg.subTitelFld.textChanged.connect(self.update_preview)
+        self.dlg.bronnenFld.textChanged.connect(self.update_preview)
+        self.dlg.opmerkingenFld.textChanged.connect(self.update_preview)
+        
+        # change the labels according to paper size standard
         if self.paper_size_standard == "DIN":
             self.dlg.a4Btn.setText("A4")
             self.dlg.a3Btn.setText("A3")
@@ -111,7 +122,7 @@ class QuickPrint3:
             self.dlg.a4Btn.setText("ANSI-A")
             self.dlg.a3Btn.setText("ANSI-B")
 
-        # and apply default remark and attribution if necessary
+        # apply default remark and attribution if necessary
         if not self.dlg.bronnenFld.toPlainText():
             self.dlg.bronnenFld.setPlainText(self.default_bronnen)
         if not self.dlg.opmerkingenFld.toPlainText():
@@ -279,19 +290,8 @@ class QuickPrint3:
             height = shortSide
 
         return width, height
-
-    def chooseFile(self):
-        '''
-        shows file chooser
-        '''
-
-        fileName, __ = QFileDialog.getSaveFileName(
-            caption = self.tr(u"save pdf"), directory = '', filter = '*.pdf')
-        if not fileName[-4:].lower().strip() == '.pdf':
-            fileName = '%s.pdf' % fileName
-        self.dlg.pdfFileNameBox.setText(fileName)
         
-    def pdfFileNameBoxChanged(self, fileName):
+    def fileNameBoxChanged(self, fileName):
         '''
         acts when file name in dialog has changed
         '''
@@ -352,6 +352,9 @@ class QuickPrint3:
                 pass
             self.logoImagePath = path
             self.settings.setValue("QuickPrint/logo_path", self.logoImagePath)
+            if not self.logoImagePath:
+                self.dlg.logo_cbx.setChecked(False)
+                self.dlg.logo_cbx.setEnabled(False)
             
             self.dateFormatString = unicode(self.settings_dlg.date_format_ldt.text())
             self.settings.setValue("QuickPrint/date_format_string", self.dateFormatString)
@@ -378,164 +381,218 @@ class QuickPrint3:
             self.settings.setValue("QuickPrint/paper_size_standard", 
                 self.paper_size_standard)
 
+    def update_preview(self, size = None):
+        """
+        Shows the preview
+        """
+        
+        if self.dlg.isVisible():
+            QGuiApplication.setOverrideCursor(Qt.WaitCursor)
+            l = self.get_print_layout()
+            exporter = QgsLayoutExporter(l)
+            previewImage = exporter.renderPageToImage(page = 0)              
+            img = QPixmap(previewImage).scaled(
+                self.dlg.preview_lbl.width(), 
+                self.dlg.preview_lbl.height(), 
+                QtCore.Qt.KeepAspectRatio)
+            self.dlg.preview_lbl.setPixmap(img)
+            QGuiApplication.restoreOverrideCursor()
+                    
+    def get_print_layout(self):
+        '''
+        Creates print layout for either a preview or an export
+        '''
+        
+        font_scale = float(self.fontSize) / 100
+
+        dpi = 600
+        # get the users input 
+        titel = self.dlg.titelFld.text()
+        subTitel = self.dlg.subTitelFld.text()
+
+        bronnen = self.dlg.bronnenFld.toPlainText()
+        opmerkingen = self.dlg.opmerkingenFld.toPlainText()
+
+        project = QgsProject.instance()
+        l = QgsPrintLayout(project)
+        l.initializeDefaults()
+        l.setUnits(QgsUnitTypes.LayoutMillimeters)
+        page = l.pageCollection().pages()[0]
+        
+        paperSize = self.getPaperSize()
+        page.setPageSize(QgsLayoutSize(paperSize[0],paperSize[1]))
+
+        # add gadgets
+        # but first get margins and paper size right
+        lm = 10         # left margin
+        tm = 30         # upper margin
+        bm = 65         # lower margin
+        
+        refSize = paperSize[0]
+        if paperSize[1] < refSize:
+            refSize = paperSize[1]
+
+        # add map
+        x, y = lm, tm
+        w, h = paperSize[0] -  2 * lm, paperSize[1] - bm
+        
+        theMap = QgsLayoutItemMap(l)
+        theMap.updateBoundingRect()
+        theMap.setRect(QRectF(x, y, w, h)) 
+        theMap.setPos(x,y)
+        theMap.setFrameEnabled(True)
+        
+        # project.mapLayers().values():
+        theMap.setLayers(project.mapThemeCollection().masterVisibleLayers())   # remember ANNOTATION!
+        theMap.setExtent(self.iface.mapCanvas().extent())
+        theMap.attemptSetSceneRect(QRectF(x, y, w, h))
+        l.addItem(theMap)
+        
+        # add title
+        titleFont = QFont(self.textFont, int(font_scale * 14))
+        titleFont.setBold(True)
+
+        titelLabel = QgsLayoutItemLabel(l)
+        titelLabel.setText(titel)
+        titelLabel.setPos(lm,10)
+        titelLabel.setFont(titleFont)    
+        titelLabel.adjustSizeToText()
+        l.addItem(titelLabel)
+
+        # add subtitle
+        subTitleFont = QFont(self.textFont, int(font_scale * 12))
+        subTitleFont.setBold(False)
+            
+        subTitelLabel = QgsLayoutItemLabel(l)
+        subTitelLabel.setText(subTitel)
+        subTitelLabel.setPos(lm, 20)
+        subTitelLabel.setFont(subTitleFont)	    
+        subTitelLabel.adjustSizeToText()
+        l.addItem(subTitelLabel)  
+
+        textFont = QFont(self.textFont, int(font_scale * 10))  
+
+        # add logo
+        if self.dlg.logo_cbx.isChecked():
+            try:
+                logo = QgsLayoutItemPicture(l)
+                logo.setPicturePath(self.logoImagePath)
+                logo.attemptSetSceneRect(QRectF((paperSize[0] - paperSize[0] / 3), 0, refSize / 3, refSize / 3 * 756 / 2040 )) 
+                # logo.setFrameEnabled(True)
+                l.addItem(logo)
+            except:
+                # failed to add the logo, show message and continue
+                self.iface.messageBar().pushMessage(
+                    "Warning", self.tr(u"Failed adding logo ") + \
+                    self.logoImagePath, 
+                    Qgis.Warning)
+
+        #add date
+        dateLabel = QgsLayoutItemLabel(l)
+        d = time.localtime()
+        #dString = "%d-%d-%d" % (d[2],  d[1],  d[0])
+        dString = self.dateFormatString.format(day = d[2], month = d[1], year = d[0])
+        dateLabel.setText(dString)
+        dateLabel.setFont(textFont)
+        dateLabel.adjustSizeToText()
+        dateStringWidth = dateLabel.sizeForText().width()
+        dateLabel.setPos(paperSize[0] - lm - dateStringWidth -5, (paperSize[1] - bm) + tm + 5)
+        l.addItem(dateLabel)
+            
+        # add scalebar
+        scaleBar = QgsLayoutItemScaleBar(l)
+        scaleBar.setLinkedMap(theMap)
+        scaleBar.applyDefaultSettings()
+        scaleBar.applyDefaultSize()
+        scaleBar.setStyle('Line Ticks Down') 
+        scaleBar.setNumberOfSegmentsLeft(0)
+        scaleBar.setNumberOfSegments (3)
+        scaleBar.update()
+        scaleBar.setPos(lm + 10, tm + (paperSize[1] - bm) - 20 )
+        l.addItem(scaleBar)
+
+        # add attribution
+        bronnenLabel = QgsLayoutItemLabel(l)
+        bronnenLabel.setText(bronnen)
+        bronnenLabel.setFont(textFont)
+        bronnenLabel.adjustSizeToText()	        # Doesn't work for multiline stuff, hence:
+        bronnenLabel.attemptSetSceneRect(QRectF(lm, (paperSize[1] - bm) + tm + 5, paperSize[0] - lm - dateStringWidth -5 -lm -lm, paperSize[1] - ((paperSize[1] - bm) + tm + 5) - 10 ))    
+        l.addItem(bronnenLabel)
+
+        # add remarks
+        opmLabel = QgsLayoutItemLabel(l)
+        opmLabel.setText(opmerkingen)
+        opmLabel.setFont(textFont)
+        opmLabel.adjustSizeToText()	            # Doesn't work for multiline stuff, hence:
+        opmLabel.attemptSetSceneRect(QRectF(lm, paperSize[1] - 10, paperSize[0] - lm -lm , 400 )) 
+        l.addItem(opmLabel)
+        
+        # add north arrow
+        if self.dlg.northarrow_cbx.isChecked():
+            
+            north = QgsLayoutItemPicture(l)
+            north.setLinkedMap(theMap)
+            north.setPicturePath(os.path.join(self.plugin_dir, "north-arrow.svg"))
+            l.addLayoutItem(north)
+            
+            north_arrow_size = 23
+            north.attemptResize(QgsLayoutSize(north_arrow_size, north_arrow_size,QgsUnitTypes.LayoutMillimeters))
+            
+            # bottom right
+            # north.setPos(paperSize[0] - lm - north_arrow_size, tm + (paperSize[1] - bm) - north_arrow_size )
+            # top right
+            north.setPos(paperSize[0] - lm - north_arrow_size, tm)
+        
+        return l
+        
     def run(self):
         '''
         methods doing most of the work.
         shows the dialog, and acts on the result.
         '''
 
+        if not self.logoImagePath:
+            self.dlg.logo_cbx.setChecked(False)
+            self.dlg.logo_cbx.setEnabled(False)
+            
         self.dlg.show()
+        self.update_preview()
+        
         result = self.dlg.exec_()
         if result:
-
+            
             QGuiApplication.setOverrideCursor(Qt.WaitCursor)
             
-            font_scale = float(self.fontSize) / 100
-
-            dpi = 600
-            # get the users input 
-            titel = self.dlg.titelFld.text()
-            subTitel = self.dlg.subTitelFld.text()
-    
-            bronnen = self.dlg.bronnenFld.toPlainText()
-            opmerkingen = self.dlg.opmerkingenFld.toPlainText()
-
-            project = QgsProject.instance()
-            l = QgsPrintLayout(project)
-            l.initializeDefaults()
-            l.setUnits(QgsUnitTypes.LayoutMillimeters)
-            page = l.pageCollection().pages()[0]
+            l = self.get_print_layout()
+            exporter = QgsLayoutExporter(l)
             
-            paperSize = self.getPaperSize()
-            page.setPageSize(QgsLayoutSize(paperSize[0],paperSize[1]))
-
-            # add gadgets
-            # but first get margins and paper size right
-            lm = 10         # left margin
-            tm = 30         # upper margin
-            bm = 65         # lower margin
+            export_name = self.dlg.file_name_qfw.filePath()
             
-            refSize = paperSize[0]
-            if paperSize[1] < refSize:
-                refSize = paperSize[1]
-
-            # add map
-            x, y = lm, tm
-            w, h = paperSize[0] -  2 * lm, paperSize[1] - bm
-            
-            theMap = QgsLayoutItemMap(l)
-            theMap.updateBoundingRect()
-            theMap.setRect(QRectF(x, y, w, h)) 
-            theMap.setPos(x,y)
-            theMap.setFrameEnabled(True)
-            
-            # project.mapLayers().values():
-            theMap.setLayers(project.mapThemeCollection().masterVisibleLayers())   # remember ANNOTATION!
-            theMap.setExtent(self.iface.mapCanvas().extent())
-            theMap.attemptSetSceneRect(QRectF(x, y, w, h))
-            l.addItem(theMap)
-            
-            # add title
-            titleFont = QFont(self.textFont, int(font_scale * 14))
-            titleFont.setBold(True)
-
-            titelLabel = QgsLayoutItemLabel(l)
-            titelLabel.setText(titel)
-            titelLabel.setPos(lm,10)
-            titelLabel.setFont(titleFont)    
-            titelLabel.adjustSizeToText()
-            l.addItem(titelLabel)
-
-            # add subtitle
-            subTitleFont = QFont(self.textFont, int(font_scale * 12))
-            subTitleFont.setBold(False)
+            if export_name[-4:].lower() == '.pdf':
+                # export pdf
+                pdf_settings = exporter.PdfExportSettings() #dpi?
+                exporter.exportToPdf(export_name, pdf_settings)
                 
-            subTitelLabel = QgsLayoutItemLabel(l)
-            subTitelLabel.setText(subTitel)
-            subTitelLabel.setPos(lm, 20)
-            subTitelLabel.setFont(subTitleFont)	    
-            subTitelLabel.adjustSizeToText()
-            l.addItem(subTitelLabel)  
-
-            textFont = QFont(self.textFont, int(font_scale * 10))  
-
-            # add logo
-            
-            if self.logoImagePath:
-                try:
-                    logo = QgsLayoutItemPicture(l)
-                    logo.setPicturePath(self.logoImagePath)
-                    logo.attemptSetSceneRect(QRectF((paperSize[0] - paperSize[0] / 3), 0, refSize / 3, refSize / 3 * 756 / 2040 )) 
-                    # logo.setFrameEnabled(True)
-                    l.addItem(logo)
-                except:
-                    # failed to add the logo, show message and continue
-                    self.iface.messageBar().pushMessage(
-                        "Warning", self.tr(u"Failed adding logo ") + \
-                        self.logoImagePath, 
-                        Qgis.Warning)
-
-            #add date
-            dateLabel = QgsLayoutItemLabel(l)
-            d = time.localtime()
-            #dString = "%d-%d-%d" % (d[2],  d[1],  d[0])
-            dString = self.dateFormatString.format(day = d[2], month = d[1], year = d[0])
-            dateLabel.setText(dString)
-            dateLabel.setFont(textFont)
-            dateLabel.adjustSizeToText()
-            dateStringWidth = dateLabel.sizeForText().width()
-            dateLabel.setPos(paperSize[0] - lm - dateStringWidth -5, (paperSize[1] - bm) + tm + 5)
-            l.addItem(dateLabel)
-                
-            # add scalebar
-            scaleBar = QgsLayoutItemScaleBar(l)
-            scaleBar.setLinkedMap(theMap)
-            scaleBar.applyDefaultSettings()
-            scaleBar.applyDefaultSize()
-            # scaleBar.setStyle('Line Ticks Down') 
-            scaleBar.setNumberOfSegmentsLeft(0)
-            scaleBar.setNumberOfSegments (3)
-            scaleBar.update()
-            scaleBar.setPos(lm + 10, tm + (paperSize[1] - bm) - 20 )
-            l.addItem(scaleBar)
-
-            # add attribution
-            bronnenLabel = QgsLayoutItemLabel(l)
-            bronnenLabel.setText(bronnen)
-            bronnenLabel.setFont(textFont)
-            bronnenLabel.adjustSizeToText()	        # Doesn't work for multiline stuff, hence:
-            bronnenLabel.attemptSetSceneRect(QRectF(lm, (paperSize[1] - bm) + tm + 5, paperSize[0] - lm - dateStringWidth -5 -lm -lm, paperSize[1] - ((paperSize[1] - bm) + tm + 5) - 10 ))    
-            l.addItem(bronnenLabel)
-
-            # add remarks
-            opmLabel = QgsLayoutItemLabel(l)
-            opmLabel.setText(opmerkingen)
-            opmLabel.setFont(textFont)
-            opmLabel.adjustSizeToText()	            # Doesn't work for multiline stuff, hence:
-            opmLabel.attemptSetSceneRect(QRectF(lm, paperSize[1] - 10, paperSize[0] - lm -lm , 400 )) 
-            l.addItem(opmLabel)
-            
-            # export pdf
-            exporter =  QgsLayoutExporter(l)
-            pdf_settings = exporter.PdfExportSettings() #dpi?
-            exporter.exportToPdf(self.dlg.pdfFileNameBox.displayText(), pdf_settings)
+            if export_name[-4:].lower() == '.png':
+                img_settings = exporter.ImageExportSettings()
+                exporter.exportToImage(export_name, img_settings)
 
             # inform the user about the result
-            if os.path.exists(self.dlg.pdfFileNameBox.displayText()):
-                self.iface.messageBar().pushMessage("Info", self.tr(u"Saved as pdf: ") + \
-                                                    self.dlg.pdfFileNameBox.displayText(),
+            if os.path.exists(export_name):
+                self.iface.messageBar().pushMessage("Info", self.tr(u"Saved: ") + \
+                                                    export_name,
                                                     Qgis.Info)
                 # and if user wants so open the file
                 if self.dlg.openAfterSaveBox.isChecked():
                     if hasattr(os, 'startfile'):
                         # windows only
-                        os.startfile(self.dlg.pdfFileNameBox.displayText())
+                        os.startfile(export_name)
                     else:
-                        subprocess.call(["xdg-open", self.dlg.pdfFileNameBox.displayText()])
+                        subprocess.call(["xdg-open", export_name])
             else:
                 self.iface.messageBar().pushMessage(
                     "Warning", self.tr(u"Failed saving file ") + \
-                    self.dlg.pdfFileNameBox.displayText(), 
+                    export_name, 
                     Qgis.Warning)
 
             QGuiApplication.restoreOverrideCursor()

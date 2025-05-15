@@ -20,7 +20,7 @@
     <message>
         <location filename="../quick_print3_dialog_base.ui" line="44"/>
         <source>Attribution:</source>
-        <translation type="obsolete">Bronnen:</translation>
+        <translation>Bronnen:</translation>
     </message>
     <message>
         <location filename="../quick_print3_dialog_base.ui" line="54"/>
