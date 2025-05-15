@@ -1,31 +1,22 @@
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Introduction &#8212; quickprint 3.6.0 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '3.6.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=514cf933" />
+    
+    <script src="_static/documentation_options.js?v=5349f462"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Welcome to the QuickPrint plugin documentation" href="index.html" /> 
-  </head>
-  <body>
+  </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
@@ -35,7 +26,8 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the QuickPrint plugin documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">quickprint 3.6.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">quickprint 3.6.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Introduction</a></li> 
       </ul>
     </div>  
 
@@ -44,89 +36,92 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="about">
-<h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
+<section id="about">
+<h2>About<a class="headerlink" href="#about" title="Link to this heading">¶</a></h2>
 <p>This plug-in is developed by Marco Duiker from <a class="reference external" href="http://www.md-kwadraat.nl/">MD-kwadraat</a> .</p>
 <p>You will find the plugin in the web menu of QGIS. Furthermore you’ll find a print icon on a toolbar.</p>
-<p>The plug-in provides a simple way to quickly create a pdf from the map as shown in the map pane. The map is not just a screenshot, but a real map with a title, subtitle, scalebar, date, attribution and remarks.</p>
+<p>The plug-in provides a simple way to quickly create a pdf from the map as shown in the map pane. The map is not just a screenshot, but a real map with a title, subtitle, scalebar, date, attribution, remarks, an optional north arrow and an optional logo.</p>
 <p>In this way you get a decent print without the hassle of setting up and using print templates.</p>
 <p>As simple things go it is pretty much self-explanatory.</p>
 <p>For printing you can choose between A3 and A4 paper sizes and between portrait and landscape paper orientation.</p>
-</div>
-<div class="section" id="settings">
-<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<p>To make things even easier we’ve added a preview so you see all settins and the exact map coverage before exporting.</p>
+</section>
+<section id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Link to this heading">¶</a></h2>
 <p>The settings dialog allows you to:</p>
 <blockquote>
 <div><ul class="simple">
-<li>set the standard for paper sizes</li>
-<li>change the date formatting</li>
-<li>change the font and font size for the texts around the map</li>
-<li>select an image to use as a logo</li>
-<li>set a default attribution</li>
-<li>set a default remark</li>
+<li><p>set the standard for paper sizes</p></li>
+<li><p>change the date formatting</p></li>
+<li><p>change the font and font size for the texts around the map</p></li>
+<li><p>select an image to use as a logo</p></li>
+<li><p>set a default attribution</p></li>
+<li><p>set a default remark</p></li>
 </ul>
 </div></blockquote>
-<p>If you don’t use this settings dialog, QuickPrint will work just as you are used to.</p>
-<div class="section" id="set-the-standard-for-paper-sizes">
-<h3>Set the standard for paper sizes<a class="headerlink" href="#set-the-standard-for-paper-sizes" title="Permalink to this headline">¶</a></h3>
+<section id="set-the-standard-for-paper-sizes">
+<h3>Set the standard for paper sizes<a class="headerlink" href="#set-the-standard-for-paper-sizes" title="Link to this heading">¶</a></h3>
 <p>The QuickPrint plugin can work with either DIN paper sizes (A3 and A4) or ANSI paper sizes (ANSI-A and ANSI-B).</p>
 <p>Choose an option which suites you most.</p>
-</div>
-<div class="section" id="date-formatting">
-<h3>Date formatting<a class="headerlink" href="#date-formatting" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="date-formatting">
+<h3>Date formatting<a class="headerlink" href="#date-formatting" title="Link to this heading">¶</a></h3>
 <p>For date formatting you can provide a Python format string, in which the following items will be substituted:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal"><span class="pre">{day}</span></code> by the number of the day</li>
-<li><code class="docutils literal"><span class="pre">{month}</span></code> by the number of the day</li>
-<li><code class="docutils literal"><span class="pre">{year}</span></code> by the number of the year</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{day}</span></code> by the number of the day</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{month}</span></code> by the number of the day</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">{year}</span></code> by the number of the year</p></li>
 </ul>
 </div></blockquote>
-<p><code class="docutils literal"><span class="pre">{day}-{month}-{year}</span></code> is an example of such a format string. This will print the date as eg. <code class="docutils literal"><span class="pre">22-12-2020</span></code>.</p>
-</div>
-<div class="section" id="font-and-font-size">
-<h3>Font and font size<a class="headerlink" href="#font-and-font-size" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">{day}-{month}-{year}</span></code> is an example of such a format string. This will print the date as eg. <code class="docutils literal notranslate"><span class="pre">22-12-2020</span></code>.</p>
+</section>
+<section id="font-and-font-size">
+<h3>Font and font size<a class="headerlink" href="#font-and-font-size" title="Link to this heading">¶</a></h3>
 <p>You can select a font from the font selection box to use for the titles and texts around the map.</p>
 <p>As some fonts tend to work out a little larger or smaller than the default font, you can use the slider to set the font size a little larger or smaller to compensate for this.</p>
-</div>
-<div class="section" id="logo">
-<h3>Logo<a class="headerlink" href="#logo" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="logo">
+<h3>Logo<a class="headerlink" href="#logo" title="Link to this heading">¶</a></h3>
 <p>You can put a logo in the top right hand corner of all prints you make, by providing one of the following:</p>
 <blockquote>
 <div><ul class="simple">
-<li>A URL to an image file. This URL should start with <code class="docutils literal"><span class="pre">http://</span></code> or <code class="docutils literal"><span class="pre">https://</span></code>.</li>
-<li>A path to a local file on your file system. It’s best to use the <code class="docutils literal"><span class="pre">Browse</span></code> button for this.</li>
+<li><p>A URL to an image file. This URL should start with <code class="docutils literal notranslate"><span class="pre">http://</span></code> or <code class="docutils literal notranslate"><span class="pre">https://</span></code>.</p></li>
+<li><p>A path to a local file on your file system. It’s best to use the <code class="docutils literal notranslate"><span class="pre">Browse</span></code> button for this.</p></li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="default-attribution">
-<h3>Default attribution<a class="headerlink" href="#default-attribution" title="Permalink to this headline">¶</a></h3>
+<p>A checkbox is added to the main dialog to omit the logo temporarily, eg. when creating a map for in a report.</p>
+</section>
+<section id="default-attribution">
+<h3>Default attribution<a class="headerlink" href="#default-attribution" title="Link to this heading">¶</a></h3>
 <p>When a copyright applies to one or more of the maps in the print, providing attribution is mandatory. Via the settings a default attribution text can be set. This text will be used when starting a QGIS session, and presented in the QuickPrint print window on printing. There you can change the text as it will appear in the print.</p>
 <p>During sessions QGIS remembers the last attribution which is used and presents that text in the QuickPrint print window.</p>
-</div>
-<div class="section" id="default-remark">
-<h3>Default remark<a class="headerlink" href="#default-remark" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="default-remark">
+<h3>Default remark<a class="headerlink" href="#default-remark" title="Link to this heading">¶</a></h3>
 <p>The QuickPrint plugin allows for a remark being printed on the bottom of the page. Via the settings a default remark text can be set. This text will be used when starting a QGIS session, and presented in the QuickPrint print window on printing. There you can change the text as it will appear in the print.</p>
 <p>During sessions QGIS remembers the last remark which is used and presents that text in the QuickPrint print window.</p>
-</div>
-</div>
-<div class="section" id="north-arrow">
-<h2>North Arrow<a class="headerlink" href="#north-arrow" title="Permalink to this headline">¶</a></h2>
-<p>Some people insist on putting a north pointing arrow on a map, even if the map is oriented to the north. If you want to do so, you can put an image of a north arrow on the page instead of your logo.</p>
-<p>Beware, the north arrow will not rotate if you rotate the map.</p>
-</div>
-</div>
+</section>
+</section>
+<section id="north-arrow">
+<h2>North Arrow<a class="headerlink" href="#north-arrow" title="Link to this heading">¶</a></h2>
+<p>Some people insist on putting a north pointing arrow on a map, even if the map is oriented to the north. As this was a much asked for feature we added the possibility to have one. The north arrow will also rotate if you rotate your map.</p>
+<p>If you like another north arrow you can replace north-arrow.svg as found in the plugin folder with an image to your liking.</p>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Introduction</a><ul>
 <li><a class="reference internal" href="#about">About</a></li>
 <li><a class="reference internal" href="#settings">Settings</a><ul>
@@ -143,9 +138,12 @@
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to the QuickPrint plugin documentation</a></p>
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Welcome to the QuickPrint plugin documentation</a></p>
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -154,15 +152,15 @@
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -176,12 +174,13 @@
         <li class="right" >
           <a href="index.html" title="Welcome to the QuickPrint plugin documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">quickprint 3.6.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">quickprint 3.6.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Introduction</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2017, Marco Duiker (MD-kwadraat).
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+    &#169; Copyright 2017, Marco Duiker (MD-kwadraat).
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     </div>
   </body>
 </html>
