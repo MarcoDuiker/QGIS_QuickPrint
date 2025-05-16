@@ -66,6 +66,9 @@ class QuickPrint3:
         self.dateFormatString = self.settings.value(
                 "QuickPrint/date_format_string", "{day}-{month}-{year}")
         self.logoImagePath = self.settings.value("QuickPrint/logo_path", "")
+        self.northArrowImagePath = self.settings.value("QuickPrint/north_arrow_path", "")
+        if not self.northArrowImagePath :
+            self.northArrowImagePath = os.path.join(self.plugin_dir, "north-arrow.svg")
         if not self.logoImagePath \
         and os.path.exists(os.path.join(self.plugin_dir, 'img', 'logo.png')):
             self.logoImagePath = os.path.join(self.plugin_dir, 'img', 'logo.png')
@@ -101,6 +104,8 @@ class QuickPrint3:
         self.dlg.file_name_qfw.setFilter('*.pdf,*.png')
         self.dlg.file_name_qfw.fileChanged.connect(self.fileNameBoxChanged)
         
+        self.dlg.preview_gbx.collapsedStateChanged.connect(self.preview_toggled)
+        
         #update the preview when the mapcanvas has changed or the
         #dialog is resized or changed
         self.iface.mapCanvas().renderComplete.connect(self.update_preview)
@@ -113,6 +118,10 @@ class QuickPrint3:
         self.dlg.subTitelFld.textChanged.connect(self.update_preview)
         self.dlg.bronnenFld.textChanged.connect(self.update_preview)
         self.dlg.opmerkingenFld.textChanged.connect(self.update_preview)
+        
+        # settings
+        self.settings_dlg.fileBrowseButton.clicked.connect(self.choose_logo_file)
+        self.settings_dlg.fileBrowseButton_2.clicked.connect(self.choose_north_arrow_file)
         
         # change the labels according to paper size standard
         if self.paper_size_standard == "DIN":
@@ -320,6 +329,17 @@ class QuickPrint3:
                     filter = self.tr(u"Images (*.png *.jpg)"))[0]       
         self.settings_dlg.logo_path_ldt.setText(path)
         
+    def choose_north_arrow_file(self):
+        '''
+        Allows the user to choose a local path for the north arrow.
+        '''
+        
+        path = QFileDialog.getOpenFileName(
+                caption = self.tr(u"Select north arrow image file:"), 
+                directory = self.plugin_dir, 
+                filter = self.tr(u"Images (*.png *.jpg *.svg)"))[0]       
+        self.settings_dlg.north_arrow_path_ldt.setText(path)
+        
 
     def run_settings(self):
         '''
@@ -328,7 +348,11 @@ class QuickPrint3:
         
         if not self.logoImagePath:
             self.settings_dlg.logo_path_ldt.setPlaceholderText("https://")
+        if not self.northArrowImagePath:
+            self.settings_dlg.north_arrow_path_ldt.setPlaceholderText("https://")
         self.settings_dlg.logo_path_ldt.setText(self.logoImagePath)
+        self.settings_dlg.north_arrow_path_ldt.setText(self.orthArrowImagePath)
+        
         self.settings_dlg.date_format_ldt.setText(self.dateFormatString)
         self.settings_dlg.fontComboBox.setCurrentFont(QFont(self.textFont))
         self.settings_dlg.font_size_sld.setValue(int(self.fontSize))
@@ -343,6 +367,7 @@ class QuickPrint3:
         
         result = self.settings_dlg.exec_()
         if result:
+            # logo
             path = unicode(self.settings_dlg.logo_path_ldt.text())
             if path[0:4] == 'http':
                 # urlEncode?
@@ -356,6 +381,17 @@ class QuickPrint3:
                 self.dlg.logo_cbx.setChecked(False)
                 self.dlg.logo_cbx.setEnabled(False)
             
+            # north arrow
+            path = unicode(self.settings_dlg.north_arrow_path_ldt.text())
+            if path[0:4] == 'http':
+                # urlEncode?
+                pass
+            else:
+                # make more canonical?
+                pass
+            self.logoImagePath = path
+            self.settings.setValue("QuickPrint/north_arrow_path", self.northArrowImagePath)    
+
             self.dateFormatString = unicode(self.settings_dlg.date_format_ldt.text())
             self.settings.setValue("QuickPrint/date_format_string", self.dateFormatString)
         
@@ -380,13 +416,22 @@ class QuickPrint3:
                 self.dlg.a3Btn.setText("ANSI-B")
             self.settings.setValue("QuickPrint/paper_size_standard", 
                 self.paper_size_standard)
+                
+    def preview_toggled(self, state = None):
+        """
+        Resize dialog when preview is hidden
+        """
+        
+        self.dlg.adjustSize()
 
     def update_preview(self, size = None):
         """
         Shows the preview
         """
         
-        if self.dlg.isVisible():
+        if self.dlg.isVisible() \
+        and not self.dlg.freeze_cbx.isChecked() \
+        and not self.dlg.preview_gbx.isCollapsed():
             QGuiApplication.setOverrideCursor(Qt.WaitCursor)
             l = self.get_print_layout()
             exporter = QgsLayoutExporter(l)
@@ -532,7 +577,7 @@ class QuickPrint3:
             
             north = QgsLayoutItemPicture(l)
             north.setLinkedMap(theMap)
-            north.setPicturePath(os.path.join(self.plugin_dir, "north-arrow.svg"))
+            north.setPicturePath(self.northArrowImagePath)
             l.addLayoutItem(north)
             
             north_arrow_size = 23
@@ -556,6 +601,7 @@ class QuickPrint3:
             self.dlg.logo_cbx.setEnabled(False)
             
         self.dlg.show()
+        self.preview_toggled()
         self.update_preview()
         
         result = self.dlg.exec_()

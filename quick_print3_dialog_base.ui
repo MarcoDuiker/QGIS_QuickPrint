@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>620</width>
-    <height>900</height>
+    <height>527</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>620</width>
-    <height>900</height>
+    <height>400</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -24,6 +24,9 @@
   </property>
   <property name="windowTitle">
    <string>QuickPrint</string>
+  </property>
+  <property name="statusTip">
+   <string>Toggle updating of the preview</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="sizeConstraint">
@@ -90,6 +93,19 @@
         <string>Orientation</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
+        <item row="1" column="0" alignment="Qt::AlignLeft">
+         <widget class="QRadioButton" name="landschapBtn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Landscape</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0" alignment="Qt::AlignLeft">
          <widget class="QRadioButton" name="portretBtn">
           <property name="sizePolicy">
@@ -103,19 +119,6 @@
           </property>
           <property name="checked">
            <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0" alignment="Qt::AlignLeft">
-         <widget class="QRadioButton" name="landschapBtn">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Landscape</string>
           </property>
          </widget>
         </item>
@@ -241,40 +244,74 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="preview_lbl">
+    <widget class="QgsCollapsibleGroupBox" name="preview_gbx">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
-       <verstretch>7</verstretch>
+       <verstretch>8</verstretch>
       </sizepolicy>
      </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>271</height>
-      </size>
+     <property name="toolTip">
+      <string>Show preview</string>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
+     <property name="title">
+      <string>Preview</string>
      </property>
-     <property name="autoFillBackground">
-      <bool>true</bool>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Box</enum>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="scaledContents">
+     <property name="checkable">
       <bool>false</bool>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="collapsed">
+      <bool>true</bool>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QCheckBox" name="freeze_cbx">
+        <property name="statusTip">
+         <string>T</string>
+        </property>
+        <property name="text">
+         <string>Freeze</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="preview_lbl">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>7</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>271</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -329,6 +366,12 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>QgsCollapsibleGroupBox</class>
+   <extends>QGroupBox</extends>
+   <header>qgscollapsiblegroupbox.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>QgsFileWidget</class>
    <extends>QWidget</extends>

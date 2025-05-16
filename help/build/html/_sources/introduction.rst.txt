@@ -16,7 +16,7 @@ As simple things go it is pretty much self-explanatory.
 
 For printing you can choose between A3 and A4 paper sizes and between portrait and landscape paper orientation.
 
-To make things even easier we've added a preview so you see all settins and the exact map coverage before exporting.
+To make things even easier we've added a preview so you see all settings and the exact map coverage before exporting.
 
 Settings
 ========
@@ -88,5 +88,9 @@ North Arrow
 
 Some people insist on putting a north pointing arrow on a map, even if the map is oriented to the north. As this was a much asked for feature we added the possibility to have one. The north arrow will also rotate if you rotate your map.
 
-If you like another north arrow you can replace north-arrow.svg as found in the plugin folder with an image to your liking. 
+In the settings you can specify any image to use as a north arrow. If no image is specified in the settings, a default north arrow is used.
 
+Preview
+=======
+
+We've added a preview on the main dialog. This preview can be collapsed and also frozen. This is helpful when rendering the preview image takes to much time.

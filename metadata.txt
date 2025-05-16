@@ -15,13 +15,15 @@ version=3.7.0
 author=Marco Duiker - MD-kwadraat
 email=info@md-kwadraat.nl
 
-about=The QuickPrint plug-in provides a simple way to quickly create a pdf from the map as shown in the map pane. 
+about=The QuickPrint plug-in provides a simple way to quickly create a pdf or an image (png) from the map as shown in the map pane. 
 
     The map is not just a screenshot, but a real map with a title, subtitle, scalebar, date, attribution and remarks. In this way you get a decent print without the hassle of setting up and using print templates. 
 
     You can choose between A3 and A4 (or ANSI-A and ANSI-B) paper sizes and between portrait and landscape paper orientation.
 
-    Some customizations are possible, like putting a logo on the page and setting a different font and font size. Now, it is also possible to set a default attribution and a default remark.
+    Some customizations are possible, like putting a logo or north arrow on the page and setting a different font and font size. It is also possible to set a default attribution and a default remark.
+    
+    A preview is shown in order to make clear how the map will look before it is actually saved. 
 
 tracker=https://github.com/MarcoDuiker/QGIS_QuickPrint/issues
 repository=https://github.com/MarcoDuiker/QGIS_QuickPrint/
@@ -30,7 +32,7 @@ repository=https://github.com/MarcoDuiker/QGIS_QuickPrint/
 # Recommended items:
 
 # Uncomment the following line and add your changelog:
-changelog=Added preview
+changelog=Added preview, north arrow
 
 # Tags are comma separated with spaces allowed
 tags=print template
